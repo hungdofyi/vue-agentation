@@ -31,7 +31,7 @@ Or add to your `package.json`:
 
 ```json
 {
-  "dependencies": {
+  "devDependencies": {
     "vue-agentation": "git+https://github.com/hungdofyi/vue-agentation.git#main"
   }
 }
