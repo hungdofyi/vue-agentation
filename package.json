@@ -37,7 +37,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "typecheck": "vue-tsc --noEmit"
+    "typecheck": "vue-tsc --noEmit",
+    "prepare": "npm run build"
   },
   "peerDependencies": {
     "vue": "^3.0.0"
