@@ -194,9 +194,9 @@ export function useElementSelection(callbacks: SelectionCallbacks): UseElementSe
 
   return {
     isActive: readonly(isActive),
-    hoveredElement: readonly(hoveredElement),
+    hoveredElement: readonly(hoveredElement) as unknown as Readonly<import("vue").Ref<HTMLElement | null>>,
     highlightBox: readonly(highlightBox),
-    elementInfo: readonly(elementInfo),
+    elementInfo: readonly(elementInfo) as unknown as Readonly<import("vue").Ref<ElementInfo | null>>,
     start,
     stop,
     toggle,
