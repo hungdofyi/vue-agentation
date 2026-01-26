@@ -1,5 +1,7 @@
 # Vue Agentation
 
+[![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/hungdofyi/vue-agentation)](https://github.com/hungdofyi/vue-agentation/tags)
+
 A Vue 3 port of [Agentation](https://github.com/benjitaylor/agentation) by Benji Taylor - a visual feedback tool for AI agents.
 
 > **License**: This project is licensed under PolyForm Shield License 1.0.0 (same as the original).
@@ -24,7 +26,7 @@ pnpm add git+https://github.com/hungdofyi/vue-agentation.git
 pnpm add git+https://github.com/hungdofyi/vue-agentation.git#master
 
 # Or install from specific tag/version
-pnpm add git+https://github.com/hungdofyi/vue-agentation.git#v1.0.0
+pnpm add git+https://github.com/hungdofyi/vue-agentation.git#v1.0.1
 ```
 
 Or add to your `package.json`:
@@ -32,7 +34,7 @@ Or add to your `package.json`:
 ```json
 {
   "devDependencies": {
-    "vue-agentation": "git+https://github.com/hungdofyi/vue-agentation.git#main"
+    "vue-agentation": "git+https://github.com/hungdofyi/vue-agentation.git#v1.0.1"
   }
 }
 ```

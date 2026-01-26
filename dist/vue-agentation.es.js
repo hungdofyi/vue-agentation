@@ -147,7 +147,7 @@ const Me = ["aria-label"], Be = { class: "agentation-popup__header" }, Ne = { cl
       ])
     ], 14, Me));
   }
-}), Oe = { class: "agentation-marker__tooltip-header" }, Ye = { style: { display: "flex", "align-items": "center", "justify-content": "space-between" } }, Ge = { class: "agentation-marker__tooltip-title" }, qe = { style: { display: "flex", gap: "0.25rem" } }, Ke = { class: "agentation-marker__tooltip-path" }, Ue = { class: "agentation-marker__tooltip-body" }, Ze = { class: "agentation-marker__tooltip-comment" }, Je = {
+}), Oe = { class: "agentation-marker__tooltip-header" }, Ye = { class: "agentation-marker__tooltip-content" }, Ge = { class: "agentation-marker__tooltip-title" }, qe = { class: "agentation-marker__tooltip-path" }, Ke = { class: "agentation-marker__tooltip-actions" }, Ue = { class: "agentation-marker__tooltip-body" }, Ze = { class: "agentation-marker__tooltip-comment" }, Je = {
   key: 0,
   class: "agentation-marker__tooltip-selected-text"
 }, Xe = { class: "agentation-marker__tooltip-footer" }, Qe = /* @__PURE__ */ ee({
@@ -235,50 +235,50 @@ const Me = ["aria-label"], Be = { class: "agentation-popup__header" }, Ne = { cl
             l("div", Oe, [
               l("div", Ye, [
                 l("span", Ge, E(e.annotation.element), 1),
-                l("div", qe, [
-                  l("button", {
-                    type: "button",
-                    class: "agentation-marker__tooltip-action",
-                    title: "Edit annotation",
-                    onClick: ue(A, ["stop"])
-                  }, [...h[1] || (h[1] = [
-                    l("svg", {
-                      class: "agentation-marker__tooltip-action-icon",
-                      fill: "none",
-                      stroke: "currentColor",
-                      viewBox: "0 0 24 24"
-                    }, [
-                      l("path", {
-                        "stroke-linecap": "round",
-                        "stroke-linejoin": "round",
-                        "stroke-width": "2",
-                        d: "M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                      })
-                    ], -1)
-                  ])]),
-                  l("button", {
-                    type: "button",
-                    class: "agentation-marker__tooltip-action",
-                    title: "Delete annotation",
-                    onClick: g
-                  }, [...h[2] || (h[2] = [
-                    l("svg", {
-                      class: "agentation-marker__tooltip-action-icon",
-                      fill: "none",
-                      stroke: "currentColor",
-                      viewBox: "0 0 24 24"
-                    }, [
-                      l("path", {
-                        "stroke-linecap": "round",
-                        "stroke-linejoin": "round",
-                        "stroke-width": "2",
-                        d: "M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                      })
-                    ], -1)
-                  ])])
-                ])
+                l("p", qe, E(e.annotation.elementPath), 1)
               ]),
-              l("p", Ke, E(e.annotation.elementPath), 1)
+              l("div", Ke, [
+                l("button", {
+                  type: "button",
+                  class: "agentation-marker__tooltip-action",
+                  title: "Edit annotation",
+                  onClick: ue(A, ["stop"])
+                }, [...h[1] || (h[1] = [
+                  l("svg", {
+                    class: "agentation-marker__tooltip-action-icon",
+                    fill: "none",
+                    stroke: "currentColor",
+                    viewBox: "0 0 24 24"
+                  }, [
+                    l("path", {
+                      "stroke-linecap": "round",
+                      "stroke-linejoin": "round",
+                      "stroke-width": "2",
+                      d: "M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                    })
+                  ], -1)
+                ])]),
+                l("button", {
+                  type: "button",
+                  class: "agentation-marker__tooltip-action",
+                  title: "Delete annotation",
+                  onClick: g
+                }, [...h[2] || (h[2] = [
+                  l("svg", {
+                    class: "agentation-marker__tooltip-action-icon",
+                    fill: "none",
+                    stroke: "currentColor",
+                    viewBox: "0 0 24 24"
+                  }, [
+                    l("path", {
+                      "stroke-linecap": "round",
+                      "stroke-linejoin": "round",
+                      "stroke-width": "2",
+                      d: "M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                    })
+                  ], -1)
+                ])])
+              ])
             ]),
             l("div", Ue, [
               l("p", Ze, E(e.annotation.comment), 1),
@@ -296,7 +296,7 @@ const Me = ["aria-label"], Be = { class: "agentation-popup__header" }, Ne = { cl
   for (const [o, i] of t)
     n[o] = i;
   return n;
-}, pe = /* @__PURE__ */ et(Qe, [["__scopeId", "data-v-675bf045"]]), tt = "agentation-annotations-", he = "agentation-settings", nt = 7;
+}, pe = /* @__PURE__ */ et(Qe, [["__scopeId", "data-v-8b7a5f10"]]), tt = "agentation-annotations-", he = "agentation-settings", nt = 7;
 function te(e) {
   return `${tt}${e}`;
 }
