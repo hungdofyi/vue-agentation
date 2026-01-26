@@ -155,7 +155,7 @@ export function identifyElement(target: Element): {
   // Check for significant class for any element not caught above
   // (div, span, article, section, strong, etc.)
   if (target.classList.length > 0) {
-    const significantClass = Array.from(target.classList).find((c) => {
+    const significantClasses = Array.from(target.classList).filter((c) => {
         // Filter out CSS module hashes and common utility-like patterns if needed
         // For now, filtering hashes similar to getElementClasses
         if (c.match(/^_[a-zA-Z0-9]+$/)) return false;
@@ -163,8 +163,10 @@ export function identifyElement(target: Element): {
         return true;
     });
     
-    if (significantClass) {
-        return { name: `${tag}.${significantClass}`, path };
+    if (significantClasses.length > 0) {
+        // Show up to 3 classes to look like a selector (e.g. div.flex.p-4.bg-red)
+        const classesStr = significantClasses.slice(0, 3).join('.');
+        return { name: `${tag}.${classesStr}`, path };
     }
   }
 

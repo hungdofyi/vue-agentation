@@ -499,9 +499,11 @@ function re(e) {
   if (n === "li")
     return { name: "List item", path: t };
   if (e.classList.length > 0) {
-    const r = Array.from(e.classList).find((c) => !(c.match(/^_[a-zA-Z0-9]+$/) || c.match(/[A-Za-z]+_[a-z0-9]{5,}$/)));
-    if (r)
-      return { name: `${n}.${r}`, path: t };
+    const r = Array.from(e.classList).filter((c) => !(c.match(/^_[a-zA-Z0-9]+$/) || c.match(/[A-Za-z]+_[a-z0-9]{5,}$/)));
+    if (r.length > 0) {
+      const c = r.slice(0, 3).join(".");
+      return { name: `${n}.${c}`, path: t };
+    }
   }
   if (["nav", "header", "footer", "main", "section", "article"].includes(n)) {
     const r = e.getAttribute("aria-label");
