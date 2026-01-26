@@ -18,13 +18,13 @@ Install from GitHub (public repository, no authentication required):
 
 ```bash
 # Install from GitHub
-pnpm add git+https://github.com/yourusername/vue-agentation.git
+pnpm add git+https://github.com/hungdofyi/vue-agentation.git
 
 # Or install from specific branch
-pnpm add git+https://github.com/yourusername/vue-agentation.git#main
+pnpm add git+https://github.com/hungdofyi/vue-agentation.git#main
 
 # Or install from specific tag/version
-pnpm add git+https://github.com/yourusername/vue-agentation.git#v1.0.0
+pnpm add git+https://github.com/hungdofyi/vue-agentation.git#v1.0.0
 ```
 
 Or add to your `package.json`:
@@ -32,7 +32,7 @@ Or add to your `package.json`:
 ```json
 {
   "dependencies": {
-    "vue-agentation": "git+https://github.com/yourusername/vue-agentation.git#main"
+    "vue-agentation": "git+https://github.com/hungdofyi/vue-agentation.git#main"
   }
 }
 ```
