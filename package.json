@@ -27,7 +27,7 @@
       "import": "./dist/vue-agentation.es.js",
       "require": "./dist/vue-agentation.umd.js"
     },
-    "./style.css": "./dist/style.css"
+    "./style.css": "./dist/vue-agentation.css"
   },
   "files": [
     "dist",
