@@ -21,7 +21,7 @@ Install from GitHub (public repository, no authentication required):
 pnpm add git+https://github.com/hungdofyi/vue-agentation.git
 
 # Or install from specific branch
-pnpm add git+https://github.com/hungdofyi/vue-agentation.git#main
+pnpm add git+https://github.com/hungdofyi/vue-agentation.git#master
 
 # Or install from specific tag/version
 pnpm add git+https://github.com/hungdofyi/vue-agentation.git#v1.0.0
@@ -149,3 +149,4 @@ pnpm typecheck
 This project is licensed under PolyForm Shield License 1.0.0. See [LICENSE](./LICENSE) for details.
 
 This is a Vue 3 port of the original [Agentation](https://github.com/benjitaylor/agentation) project by Benji Taylor.
+
