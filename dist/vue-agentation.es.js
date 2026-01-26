@@ -1,14 +1,14 @@
-import { defineComponent as J, ref as $, computed as D, onMounted as j, nextTick as ge, onUnmounted as W, openBlock as k, createElementBlock as C, normalizeStyle as N, normalizeClass as P, createElementVNode as l, toDisplayString as _, createCommentVNode as M, withDirectives as he, vModelText as ve, createTextVNode as V, createVNode as ye, Transition as be, withCtx as xe, withModifiers as we, readonly as B, createBlock as H, Teleport as ke, unref as d, Fragment as oe, renderList as ie } from "vue";
+import { defineComponent as Z, ref as $, computed as D, onMounted as j, nextTick as ge, onUnmounted as W, openBlock as k, createElementBlock as C, normalizeStyle as N, normalizeClass as L, createElementVNode as l, toDisplayString as _, createCommentVNode as M, withDirectives as he, vModelText as ve, createTextVNode as V, createVNode as ye, Transition as be, withCtx as xe, withModifiers as we, readonly as B, createBlock as H, Teleport as ke, unref as d, Fragment as oe, renderList as ie } from "vue";
 const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { class: "agentation-popup__header-content" }, Se = { class: "agentation-popup__header-title" }, Ee = {
   key: 0,
   class: "agentation-popup__header-selected"
 }, _e = { class: "agentation-popup__body" }, Te = {
   key: 0,
   style: { "margin-top": "0.5rem" }
-}, Le = {
+}, Pe = {
   key: 0,
   class: "agentation-popup__styles-pre"
-}, Pe = { class: "agentation-popup__footer" }, Me = { class: "agentation-popup__actions" }, Be = /* @__PURE__ */ J({
+}, Le = { class: "agentation-popup__footer" }, Me = { class: "agentation-popup__actions" }, Be = /* @__PURE__ */ Z({
   __name: "AnnotationPopup",
   props: {
     element: {},
@@ -23,55 +23,55 @@ const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { cl
   },
   emits: ["submit", "cancel"],
   setup(e, { expose: t, emit: n }) {
-    const o = n, i = $(e.initialValue), r = $(null), p = $(!1), x = $(!1), y = $("initial"), E = D(() => {
+    const o = n, i = $(e.initialValue), u = $(null), p = $(!1), x = $(!1), h = $("initial"), E = D(() => {
       let w = e.x, S = e.y + 20;
       return typeof window < "u" && (w + 320 > window.innerWidth - 16 && (w = window.innerWidth - 320 - 16), w < 16 && (w = 16), S + 200 > window.innerHeight - 16 && (S = e.y - 200 - 10), S < 16 && (S = 16)), {
         left: `${w}px`,
         top: `${S}px`
       };
     });
-    function A() {
-      const v = i.value.trim();
-      if (!v) {
-        u();
+    function r() {
+      const g = i.value.trim();
+      if (!g) {
+        A();
         return;
       }
-      o("submit", v);
+      o("submit", g);
     }
-    function g() {
-      y.value = "exit", setTimeout(() => {
+    function c() {
+      h.value = "exit", setTimeout(() => {
         o("cancel");
       }, 150);
     }
-    function u() {
+    function A() {
       p.value = !0, setTimeout(() => {
         p.value = !1;
       }, 500);
     }
-    function m(v) {
-      v.key === "Enter" && (v.metaKey || v.ctrlKey) ? (v.preventDefault(), A()) : v.key === "Escape" && (v.preventDefault(), g());
+    function b(g) {
+      g.key === "Enter" && (g.metaKey || g.ctrlKey) ? (g.preventDefault(), r()) : g.key === "Escape" && (g.preventDefault(), c());
     }
     j(() => {
-      y.value = "enter", ge(() => {
-        var v;
-        y.value = "entered", (v = r.value) == null || v.focus();
+      h.value = "enter", ge(() => {
+        var g;
+        h.value = "entered", (g = u.value) == null || g.focus();
       });
     });
-    function h(v) {
-      v.key === "Escape" && g();
+    function v(g) {
+      g.key === "Escape" && c();
     }
     return j(() => {
-      document.addEventListener("keydown", h);
+      document.addEventListener("keydown", v);
     }), W(() => {
-      document.removeEventListener("keydown", h);
-    }), t({ shake: u }), (v, a) => (k(), C("div", {
-      class: P(["agentation-popup", [
+      document.removeEventListener("keydown", v);
+    }), t({ shake: A }), (g, a) => (k(), C("div", {
+      class: L(["agentation-popup", [
         e.dark ? "agentation-popup--dark" : "",
         p.value && "agentation-animate-shake",
-        y.value === "initial" && "agentation-popup--entering",
-        y.value === "enter" && "agentation-popup--entering",
-        y.value === "entered" && "agentation-popup--entered",
-        y.value === "exit" && "agentation-popup--exiting"
+        h.value === "initial" && "agentation-popup--entering",
+        h.value === "enter" && "agentation-popup--entering",
+        h.value === "entered" && "agentation-popup--entered",
+        h.value === "exit" && "agentation-popup--exiting"
       ]]),
       style: N(E.value),
       "data-agentation-ignore": "",
@@ -92,11 +92,11 @@ const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { cl
       l("div", _e, [
         he(l("textarea", {
           ref_key: "textareaRef",
-          ref: r,
-          "onUpdate:modelValue": a[0] || (a[0] = (c) => i.value = c),
+          ref: u,
+          "onUpdate:modelValue": a[0] || (a[0] = (f) => i.value = f),
           class: "agentation-popup__textarea",
           placeholder: "Add your comment...",
-          onKeydown: m
+          onKeydown: b
         }, null, 544), [
           [ve, i.value]
         ]),
@@ -104,10 +104,10 @@ const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { cl
           l("button", {
             type: "button",
             class: "agentation-popup__styles-toggle",
-            onClick: a[1] || (a[1] = (c) => x.value = !x.value)
+            onClick: a[1] || (a[1] = (f) => x.value = !x.value)
           }, [
             (k(), C("svg", {
-              class: P(["agentation-popup__styles-icon", x.value && "agentation-popup__styles-icon--open"]),
+              class: L(["agentation-popup__styles-icon", x.value && "agentation-popup__styles-icon--open"]),
               fill: "none",
               stroke: "currentColor",
               viewBox: "0 0 24 24"
@@ -121,10 +121,10 @@ const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { cl
             ])], 2)),
             a[3] || (a[3] = V(" Computed styles ", -1))
           ]),
-          x.value ? (k(), C("pre", Le, _(e.computedStyles), 1)) : M("", !0)
+          x.value ? (k(), C("pre", Pe, _(e.computedStyles), 1)) : M("", !0)
         ])) : M("", !0)
       ]),
-      l("div", Pe, [
+      l("div", Le, [
         a[4] || (a[4] = l("span", { class: "agentation-popup__shortcut" }, [
           l("kbd", { class: "agentation-popup__kbd" }, "⌘"),
           V(" + "),
@@ -135,13 +135,13 @@ const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { cl
           l("button", {
             type: "button",
             class: "agentation-popup__btn agentation-popup__btn--cancel",
-            onClick: g
+            onClick: c
           }, " Cancel "),
           l("button", {
             type: "button",
             class: "agentation-popup__btn agentation-popup__btn--submit",
             style: N({ backgroundColor: e.accentColor }),
-            onClick: A
+            onClick: r
           }, _(e.submitLabel), 5)
         ])
       ])
@@ -150,7 +150,7 @@ const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { cl
 }), Ie = { class: "agentation-marker__tooltip-header" }, De = { style: { display: "flex", "align-items": "center", "justify-content": "space-between" } }, Ne = { class: "agentation-marker__tooltip-title" }, Fe = { class: "agentation-marker__tooltip-path" }, ze = { class: "agentation-marker__tooltip-body" }, je = { class: "agentation-marker__tooltip-comment" }, He = {
   key: 0,
   class: "agentation-marker__tooltip-selected-text"
-}, Ve = { class: "agentation-marker__tooltip-footer" }, Re = /* @__PURE__ */ J({
+}, Ve = { class: "agentation-marker__tooltip-footer" }, Re = /* @__PURE__ */ Z({
   __name: "AnnotationMarker",
   props: {
     annotation: {},
@@ -161,24 +161,24 @@ const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { cl
   },
   emits: ["click", "delete", "mouseenter", "mouseleave"],
   setup(e, { emit: t }) {
-    const n = t, o = $(!1), i = $("initial"), r = D(() => {
-      const g = {
+    const n = t, o = $(!1), i = $("initial"), u = D(() => {
+      const c = {
         left: `${e.annotation.x}%`
       };
-      return e.annotation.isFixed ? g.top = `${e.annotation.y}px` : g.top = `${e.annotation.y}px`, g;
+      return e.annotation.isFixed ? c.top = `${e.annotation.y}px` : c.top = `${e.annotation.y}px`, c;
     }), p = D(() => e.annotation.x > 70 ? "left" : "right");
-    function x(g) {
-      g.stopPropagation(), n("click", e.annotation);
+    function x(c) {
+      c.stopPropagation(), n("click", e.annotation);
     }
-    function y(g) {
-      g.stopPropagation(), i.value = "exit", setTimeout(() => {
+    function h(c) {
+      c.stopPropagation(), i.value = "exit", setTimeout(() => {
         n("delete", e.annotation);
       }, 200);
     }
     function E() {
       o.value = !0, n("mouseenter", e.annotation);
     }
-    function A() {
+    function r() {
       o.value = !1, n("mouseleave", e.annotation);
     }
     return j(() => {
@@ -187,22 +187,22 @@ const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { cl
           i.value = "entered";
         });
       });
-    }), (g, u) => (k(), C("div", {
-      class: P(["agentation-marker", [
+    }), (c, A) => (k(), C("div", {
+      class: L(["agentation-marker", [
         e.annotation.isFixed ? "agentation-marker--fixed" : "agentation-marker--absolute",
         i.value === "initial" && "agentation-marker--entering",
         i.value === "enter" && "agentation-marker--entering",
         i.value === "entered" && "agentation-marker--entered",
         i.value === "exit" && "agentation-marker--exiting"
       ]]),
-      style: N(r.value),
+      style: N(u.value),
       "data-agentation-ignore": "",
       onMouseenter: E,
-      onMouseleave: A,
+      onMouseleave: r,
       onClick: x
     }, [
       l("div", {
-        class: P(["agentation-marker__dot", [e.isHovered && "agentation-marker__dot--hovered"]]),
+        class: L(["agentation-marker__dot", [e.isHovered && "agentation-marker__dot--hovered"]]),
         style: N({ backgroundColor: e.accentColor })
       }, [
         V(_(e.index + 1) + " ", 1),
@@ -222,11 +222,11 @@ const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { cl
         default: xe(() => [
           o.value ? (k(), C("div", {
             key: 0,
-            class: P(["agentation-marker__tooltip", [
+            class: L(["agentation-marker__tooltip", [
               e.dark ? "agentation-marker__tooltip--dark" : "",
               p.value === "left" ? "agentation-marker__tooltip--left" : "agentation-marker__tooltip--right"
             ]]),
-            onClick: u[0] || (u[0] = we(() => {
+            onClick: A[0] || (A[0] = we(() => {
             }, ["stop"]))
           }, [
             l("div", Ie, [
@@ -236,8 +236,8 @@ const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { cl
                   type: "button",
                   class: "agentation-marker__tooltip-delete",
                   title: "Delete annotation",
-                  onClick: y
-                }, [...u[1] || (u[1] = [
+                  onClick: h
+                }, [...A[1] || (A[1] = [
                   l("svg", {
                     class: "agentation-marker__tooltip-delete-icon",
                     fill: "none",
@@ -272,7 +272,7 @@ const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { cl
     n[o] = i;
   return n;
 }, ae = /* @__PURE__ */ We(Re, [["__scopeId", "data-v-28a8338d"]]), Oe = "agentation-annotations-", ue = "agentation-settings", Ge = 7;
-function Z(e) {
+function J(e) {
   return `${Oe}${e}`;
 }
 function q() {
@@ -283,7 +283,7 @@ function q() {
 function le(e) {
   if (typeof window > "u") return [];
   try {
-    const t = localStorage.getItem(Z(e));
+    const t = localStorage.getItem(J(e));
     if (!t) return [];
     const n = JSON.parse(t), o = Date.now() - Ge * 24 * 60 * 60 * 1e3;
     return n.filter(
@@ -296,14 +296,14 @@ function le(e) {
 function K(e, t) {
   if (!(typeof window > "u"))
     try {
-      localStorage.setItem(Z(e), JSON.stringify(t));
+      localStorage.setItem(J(e), JSON.stringify(t));
     } catch {
     }
 }
 function qe(e) {
   if (!(typeof window > "u"))
     try {
-      localStorage.removeItem(Z(e));
+      localStorage.removeItem(J(e));
     } catch {
     }
 }
@@ -345,15 +345,15 @@ function Ye() {
   function i(a) {
     o.value = a, e.value = le(a);
   }
-  function r(a) {
+  function u(a) {
     o.value = a, e.value = le(a), t.value = null, n.value = null;
   }
-  function p(a, c) {
+  function p(a, f) {
     const w = {
       id: crypto.randomUUID(),
       x: a.x,
       y: a.y,
-      comment: c,
+      comment: f,
       element: a.element,
       elementPath: a.elementPath,
       timestamp: Date.now(),
@@ -370,13 +370,13 @@ function Ye() {
     return e.value = [...e.value, w], K(o.value, e.value), t.value = null, w;
   }
   function x(a) {
-    const c = e.value.find((w) => w.id === a);
-    return c ? (e.value = e.value.filter((w) => w.id !== a), K(o.value, e.value), c) : null;
+    const f = e.value.find((w) => w.id === a);
+    return f ? (e.value = e.value.filter((w) => w.id !== a), K(o.value, e.value), f) : null;
   }
-  function y(a, c) {
+  function h(a, f) {
     const w = e.value.findIndex((T) => T.id === a);
     if (w === -1) return null;
-    const S = { ...e.value[w], comment: c };
+    const S = { ...e.value[w], comment: f };
     return e.value = [
       ...e.value.slice(0, w),
       S,
@@ -386,35 +386,35 @@ function Ye() {
   function E() {
     e.value = [], qe(o.value);
   }
-  function A(a) {
+  function r(a) {
     t.value = a;
   }
-  function g(a) {
+  function c(a) {
     n.value = a;
   }
-  function u(a) {
-    return e.value.find((c) => c.id === a);
+  function A(a) {
+    return e.value.find((f) => f.id === a);
   }
-  function m(a) {
-    return e.value.findIndex((c) => c.id === a);
+  function b(a) {
+    return e.value.findIndex((f) => f.id === a);
   }
-  const h = D(() => e.value.length), v = D(() => e.value.length === 0);
+  const v = D(() => e.value.length), g = D(() => e.value.length === 0);
   return {
     annotations: B(e),
     pendingAnnotation: B(t),
     editingAnnotationId: B(n),
-    count: h,
-    isEmpty: v,
+    count: v,
+    isEmpty: g,
     initialize: i,
-    switchPath: r,
+    switchPath: u,
     add: p,
     remove: x,
-    update: y,
+    update: h,
     clear: E,
-    setPending: A,
-    setEditing: g,
-    getById: u,
-    getIndex: m
+    setPending: r,
+    setEditing: c,
+    getById: A,
+    getIndex: b
   };
 }
 function Ue() {
@@ -423,24 +423,24 @@ function Ue() {
 function At() {
   R = null;
 }
-function Je(e, t = 3) {
+function Ze(e, t = 3) {
   const n = [];
   let o = e, i = 0;
   for (; o && o !== document.body && i < t; ) {
-    let r = o.tagName.toLowerCase();
+    let u = o.tagName.toLowerCase();
     if (o.id)
-      r += `#${o.id}`;
+      u += `#${o.id}`;
     else if (o.classList.length > 0) {
       const p = Array.from(o.classList).find(
         (x) => !x.match(/^_/) && !x.match(/[A-Za-z]+_[a-z0-9]{5,}/)
       );
-      p && (r += `.${p}`);
+      p && (u += `.${p}`);
     }
-    n.unshift(r), o = o.parentElement, i++;
+    n.unshift(u), o = o.parentElement, i++;
   }
   return n.join(" > ");
 }
-function Ze(e) {
+function Je(e) {
   const t = [];
   let n = e;
   for (; n && n !== document.documentElement; ) {
@@ -450,11 +450,11 @@ function Ze(e) {
     else {
       const i = n.parentElement;
       if (i) {
-        const r = Array.from(i.children).filter(
+        const u = Array.from(i.children).filter(
           (p) => p.tagName === n.tagName
         );
-        if (r.length > 1) {
-          const p = r.indexOf(n) + 1;
+        if (u.length > 1) {
+          const p = u.indexOf(n) + 1;
           o += `:nth-of-type(${p})`;
         }
       }
@@ -464,49 +464,55 @@ function Ze(e) {
   return t.join(" > ");
 }
 function re(e) {
-  var i, r, p, x, y, E, A, g;
-  const t = Je(e), n = e.tagName.toLowerCase();
+  var o, i, u, p, x, h, E;
+  const t = Ze(e), n = e.tagName.toLowerCase();
   if (e instanceof SVGElement || e.closest("svg")) {
-    const u = e.closest("svg"), m = (i = u == null ? void 0 : u.querySelector("title")) == null ? void 0 : i.textContent, h = u == null ? void 0 : u.getAttribute("aria-label");
+    const r = e.closest("svg"), c = (o = r == null ? void 0 : r.querySelector("title")) == null ? void 0 : o.textContent, A = r == null ? void 0 : r.getAttribute("aria-label");
     return {
-      name: m || h || "SVG graphic",
+      name: c || A || "SVG graphic",
       path: t
     };
   }
   if (n === "button" || e.getAttribute("role") === "button")
-    return { name: `Button: "${((r = e.textContent) == null ? void 0 : r.trim().slice(0, 30)) || e.getAttribute("aria-label") || "Button"}"`, path: t };
+    return { name: `Button: "${((i = e.textContent) == null ? void 0 : i.trim().slice(0, 30)) || e.getAttribute("aria-label") || "Button"}"`, path: t };
   if (n === "a")
-    return { name: `Link: "${((p = e.textContent) == null ? void 0 : p.trim().slice(0, 30)) || e.getAttribute("aria-label") || "Link"}"`, path: t };
+    return { name: `Link: "${((u = e.textContent) == null ? void 0 : u.trim().slice(0, 30)) || e.getAttribute("aria-label") || "Link"}"`, path: t };
   if (n === "input" || n === "textarea" || n === "select") {
-    const u = e.type || n, m = e.getAttribute("aria-label") || e.getAttribute("placeholder") || ((y = (x = document.querySelector(`label[for="${e.id}"]`)) == null ? void 0 : x.textContent) == null ? void 0 : y.trim());
+    const r = e.type || n, c = e.getAttribute("aria-label") || e.getAttribute("placeholder") || ((x = (p = document.querySelector(`label[for="${e.id}"]`)) == null ? void 0 : p.textContent) == null ? void 0 : x.trim());
     return {
-      name: m ? `${u}: "${m}"` : `${u} field`,
+      name: c ? `${r}: "${c}"` : `${r} field`,
       path: t
     };
   }
-  if (/^h[1-6]$/.test(n))
-    return { name: `Heading: "${((E = e.textContent) == null ? void 0 : E.trim().slice(0, 40)) || "Heading"}"`, path: t };
-  if (n === "img") {
-    const u = e.alt;
-    return { name: u ? `Image: "${u}"` : "Image", path: t };
+  if (/^h[1-6]$/.test(n)) {
+    const r = (h = e.textContent) == null ? void 0 : h.trim().slice(0, 40);
+    return { name: r ? `${n}: "${r}"` : n, path: t };
   }
-  if (n === "p" || n === "span" || n === "div") {
-    const u = (A = e.textContent) == null ? void 0 : A.trim();
-    if (u && u.length > 0)
-      return { name: `Text: "${u.slice(0, 40) + (u.length > 40 ? "..." : "")}"`, path: t };
+  if (n === "p") {
+    const r = (E = e.textContent) == null ? void 0 : E.trim();
+    return r && r.length > 0 ? { name: `Paragraph: "${r.slice(0, 40) + (r.length > 40 ? "..." : "")}"`, path: t } : { name: "Paragraph", path: t };
+  }
+  if (n === "img") {
+    const r = e.alt;
+    return { name: r ? `Image: "${r}"` : "Image", path: t };
   }
   if (n === "li")
-    return { name: `List item: "${((g = e.textContent) == null ? void 0 : g.trim().slice(0, 40)) || "List item"}"`, path: t };
-  if (["nav", "header", "footer", "main", "section", "article"].includes(n)) {
-    const u = e.getAttribute("aria-label");
-    return {
-      name: u ? `${n}: "${u}"` : n,
-      path: t
-    };
+    return { name: "List item", path: t };
+  if (e.classList.length > 0) {
+    const r = Array.from(e.classList).find((c) => !(c.match(/^_[a-zA-Z0-9]+$/) || c.match(/[A-Za-z]+_[a-z0-9]{5,}$/)));
+    if (r)
+      return { name: `${n}.${r}`, path: t };
   }
-  const o = e.classList[0];
+  if (["nav", "header", "footer", "main", "section", "article"].includes(n)) {
+    const r = e.getAttribute("aria-label");
+    if (r)
+      return {
+        name: `${n}: "${r}"`,
+        path: t
+      };
+  }
   return {
-    name: o ? `${n}.${o}` : n,
+    name: n,
     path: t
   };
 }
@@ -521,18 +527,18 @@ function St(e) {
   return n.includes("spinner") || n.includes("loader") || n.includes("loading") ? "spinner" : t;
 }
 function Xe(e) {
-  var r, p, x;
+  var u, p, x;
   const t = [], n = e.previousElementSibling;
   if (n) {
-    const y = (r = n.textContent) == null ? void 0 : r.trim();
-    y && y.length < 100 && t.push(`[prev]: ${y.slice(0, 50)}`);
+    const h = (u = n.textContent) == null ? void 0 : u.trim();
+    h && h.length < 100 && t.push(`[prev]: ${h.slice(0, 50)}`);
   }
   const o = (p = e.textContent) == null ? void 0 : p.trim();
   o && o.length < 200 && t.push(o.slice(0, 80));
   const i = e.nextElementSibling;
   if (i) {
-    const y = (x = i.textContent) == null ? void 0 : x.trim();
-    y && y.length < 100 && t.push(`[next]: ${y.slice(0, 50)}`);
+    const h = (x = i.textContent) == null ? void 0 : x.trim();
+    h && h.length < 100 && t.push(`[next]: ${h.slice(0, 50)}`);
   }
   return t.join(" | ");
 }
@@ -543,8 +549,8 @@ function Qe(e) {
   o && t.push(`prev: ${o.tagName.toLowerCase()}`);
   const i = e.nextElementSibling;
   i && t.push(`next: ${i.tagName.toLowerCase()}`);
-  const r = e.children.length;
-  return r > 0 && t.push(`children: ${r}`), t.join(", ");
+  const u = e.children.length;
+  return u > 0 && t.push(`children: ${u}`), t.join(", ");
 }
 function et(e) {
   return !e.classList || e.classList.length === 0 ? "" : Array.from(e.classList).filter((t) => !(t.match(/^_[a-zA-Z0-9]+$/) || t.match(/[A-Za-z]+_[a-z0-9]{5,}$/))).join(" ");
@@ -620,81 +626,81 @@ function ot(e) {
   return !1;
 }
 function it(e) {
-  const t = $(!1), n = $(null), o = $(null), i = $(null), r = "[data-agentation-ignore]";
-  function p(m) {
-    return !!(m.closest(r) || m === document.body || m === document.documentElement);
+  const t = $(!1), n = $(null), o = $(null), i = $(null), u = "[data-agentation-ignore]";
+  function p(b) {
+    return !!(b.closest(u) || b === document.body || b === document.documentElement);
   }
-  function x(m) {
-    var v, a;
-    const h = m.target;
-    if (p(h)) {
-      n.value = null, o.value = null, i.value = null, (v = e.onHoverChange) == null || v.call(e, null);
+  function x(b) {
+    var g, a;
+    const v = b.target;
+    if (p(v)) {
+      n.value = null, o.value = null, i.value = null, (g = e.onHoverChange) == null || g.call(e, null);
       return;
     }
-    if (h !== n.value) {
-      n.value = h;
-      const c = h.getBoundingClientRect();
-      o.value = c;
-      const { name: w, path: S } = re(h), T = {
-        element: h,
+    if (v !== n.value) {
+      n.value = v;
+      const f = v.getBoundingClientRect();
+      o.value = f;
+      const { name: w, path: S } = re(v), T = {
+        element: v,
         name: w,
         path: S,
-        rect: c
+        rect: f
       };
       i.value = T, (a = e.onHoverChange) == null || a.call(e, T);
     }
   }
-  function y(m) {
-    m.preventDefault(), m.stopPropagation();
-    const h = m.target;
-    if (p(h))
+  function h(b) {
+    b.preventDefault(), b.stopPropagation();
+    const v = b.target;
+    if (p(v))
       return;
-    const { name: v, path: a } = re(h), c = h.getBoundingClientRect(), w = window.innerWidth, S = window.scrollY, T = ot(h), F = {
-      x: (c.left + c.width / 2) / w * 100,
-      y: T ? c.top + c.height / 2 : c.top + c.height / 2 + S,
-      element: v,
+    const { name: g, path: a } = re(v), f = v.getBoundingClientRect(), w = window.innerWidth, S = window.scrollY, T = ot(v), F = {
+      x: (f.left + f.width / 2) / w * 100,
+      y: T ? f.top + f.height / 2 : f.top + f.height / 2 + S,
+      element: g,
       elementPath: a,
       boundingBox: {
-        x: c.left,
-        y: c.top,
-        width: c.width,
-        height: c.height
+        x: f.left,
+        y: f.top,
+        width: f.width,
+        height: f.height
       },
-      nearbyText: Xe(h),
-      nearbyElements: Qe(h),
-      cssClasses: et(h),
-      computedStyles: tt(h),
-      fullPath: Ze(h),
-      accessibility: nt(h),
+      nearbyText: Xe(v),
+      nearbyElements: Qe(v),
+      cssClasses: et(v),
+      computedStyles: tt(v),
+      fullPath: Je(v),
+      accessibility: nt(v),
       isFixed: T
     };
-    g(), e.onSelect(F, h);
+    c(), e.onSelect(F, v);
   }
-  function E(m) {
-    m.key === "Escape" && g();
+  function E(b) {
+    b.key === "Escape" && c();
   }
-  function A() {
-    t.value || (t.value = !0, document.addEventListener("mousemove", x, { capture: !0 }), document.addEventListener("click", y, { capture: !0 }), document.addEventListener("keydown", E), document.body.style.cursor = "crosshair");
+  function r() {
+    t.value || (t.value = !0, document.addEventListener("mousemove", x, { capture: !0 }), document.addEventListener("click", h, { capture: !0 }), document.addEventListener("keydown", E), document.body.style.cursor = "crosshair");
   }
-  function g() {
-    var m;
+  function c() {
+    var b;
     t.value && (t.value = !1, n.value = null, o.value = null, i.value = null, document.removeEventListener("mousemove", x, {
       capture: !0
-    }), document.removeEventListener("click", y, { capture: !0 }), document.removeEventListener("keydown", E), document.body.style.cursor = "", (m = e.onHoverChange) == null || m.call(e, null));
+    }), document.removeEventListener("click", h, { capture: !0 }), document.removeEventListener("keydown", E), document.body.style.cursor = "", (b = e.onHoverChange) == null || b.call(e, null));
   }
-  function u() {
-    t.value ? g() : A();
+  function A() {
+    t.value ? c() : r();
   }
   return W(() => {
-    t.value && g();
+    t.value && c();
   }), {
     isActive: B(t),
     hoveredElement: B(n),
     highlightBox: B(o),
     elementInfo: B(i),
-    start: A,
-    stop: g,
-    toggle: u
+    start: r,
+    stop: c,
+    toggle: A
   };
 }
 const at = "agentation-animation-freeze", Y = "--agentation-animation-state";
@@ -708,13 +714,13 @@ function lt() {
         *::after {
           animation-play-state: var(${Y}, running) !important;
         }
-      `, document.head.appendChild(t)), document.querySelectorAll("video").forEach((r) => {
-      r.paused || (r.dataset.agentationWasPlaying = "true", r.pause());
+      `, document.head.appendChild(t)), document.querySelectorAll("video").forEach((u) => {
+      u.paused || (u.dataset.agentationWasPlaying = "true", u.pause());
     }), e.value = !0);
   }
   function o() {
-    e.value && (document.documentElement.style.removeProperty(Y), t && t.parentNode && (t.parentNode.removeChild(t), t = null), document.querySelectorAll("video[data-agentation-was-playing]").forEach((r) => {
-      delete r.dataset.agentationWasPlaying, r.play().catch(() => {
+    e.value && (document.documentElement.style.removeProperty(Y), t && t.parentNode && (t.parentNode.removeChild(t), t = null), document.querySelectorAll("video[data-agentation-was-playing]").forEach((u) => {
+      delete u.dataset.agentationWasPlaying, u.play().catch(() => {
       });
     }), e.value = !1);
   }
@@ -767,9 +773,9 @@ function rt(e, t = "standard") {
     if (n.push(`## ${i + 1}. ${o.element}`), n.push(""), n.push(`**Comment:** ${o.comment}`), n.push(""), n.push(`**Selector:** \`${o.elementPath}\``), n.push(""), n.push(
       `**Position:** x=${o.x.toFixed(1)}%, y=${o.y.toFixed(0)}px`
     ), n.push(""), o.selectedText && (n.push(`**Selected Text:** "${o.selectedText}"`), n.push("")), o.boundingBox) {
-      const r = o.boundingBox;
+      const u = o.boundingBox;
       n.push(
-        `**Bounding Box:** x=${r.x.toFixed(0)}, y=${r.y.toFixed(0)}, w=${r.width.toFixed(0)}, h=${r.height.toFixed(0)}`
+        `**Bounding Box:** x=${u.x.toFixed(0)}, y=${u.y.toFixed(0)}, w=${u.width.toFixed(0)}, h=${u.height.toFixed(0)}`
       ), n.push("");
     }
     t !== "compact" && (o.nearbyText && (n.push(`**Nearby Text:** ${o.nearbyText}`), n.push("")), o.cssClasses && (n.push(`**CSS Classes:** \`${o.cssClasses}\``), n.push(""))), (t === "detailed" || t === "forensic") && (o.nearbyElements && (n.push(`**Nearby Elements:** ${o.nearbyElements}`), n.push("")), o.accessibility && (n.push(`**Accessibility:** ${o.accessibility}`), n.push(""))), t === "forensic" && (o.fullPath && (n.push(`**Full Path:** \`${o.fullPath}\``), n.push("")), o.computedStyles && (n.push("**Computed Styles:**"), n.push("```css"), n.push(o.computedStyles), n.push("```"), n.push(""))), n.push("---"), n.push("");
@@ -822,7 +828,7 @@ const ut = ["aria-pressed"], dt = ["aria-pressed", "title"], ct = {
 }, wt = {
   style: { position: "absolute", inset: "0", "z-index": "99998", "pointer-events": "none" },
   "data-agentation-ignore": ""
-}, U = "#3b82f6", Tt = /* @__PURE__ */ J({
+}, U = "#3b82f6", Tt = /* @__PURE__ */ Z({
   __name: "Agentation",
   props: {
     demoAnnotations: {},
@@ -841,111 +847,111 @@ const ut = ["aria-pressed"], dt = ["aria-pressed", "title"], ct = {
       pendingAnnotation: n,
       count: o,
       isEmpty: i,
-      initialize: r,
+      initialize: u,
       switchPath: p,
       add: x,
-      remove: y,
+      remove: h,
       clear: E,
-      setPending: A
-    } = Ue(), { isPaused: g, toggle: u } = lt(), { isDark: m, toggle: h } = st(), v = $(!1), a = $(null), c = $(!1), w = D(() => n.value ? n.value.x / 100 * (typeof window < "u" ? window.innerWidth : 0) : 0), S = D(() => {
+      setPending: r
+    } = Ue(), { isPaused: c, toggle: A } = lt(), { isDark: b, toggle: v } = st(), g = $(!1), a = $(null), f = $(!1), w = D(() => n.value ? n.value.x / 100 * (typeof window < "u" ? window.innerWidth : 0) : 0), S = D(() => {
       if (!n.value) return 0;
-      const b = typeof window < "u" ? window.scrollY : 0;
-      return n.value.isFixed ? n.value.y : n.value.y - b;
+      const y = typeof window < "u" ? window.scrollY : 0;
+      return n.value.isFixed ? n.value.y : n.value.y - y;
     }), T = D(() => {
       if (!I.value) return { showBelow: !1, showLeft: !1 };
-      const b = 32, s = 8, f = typeof window < "u" ? window.innerWidth : 1e3, L = I.value.top < b + s, G = I.value.left > f - 200;
-      return { showBelow: L, showLeft: G };
+      const y = 32, s = 8, m = typeof window < "u" ? window.innerWidth : 1e3, P = I.value.top < y + s, G = I.value.left > m - 200;
+      return { showBelow: P, showLeft: G };
     }), {
       isActive: F,
       highlightBox: I,
       elementInfo: X,
       toggle: Q
     } = it({
-      onSelect: (b) => {
-        A(b), v.value = !0;
+      onSelect: (y) => {
+        r(y), g.value = !0;
       },
       onHoverChange: () => {
       }
     }), O = $(q());
     let z = null;
     function de() {
-      const b = q();
-      b !== O.value && (O.value = b, p(b));
+      const y = q();
+      y !== O.value && (O.value = y, p(y));
     }
     function ee() {
       de(), z = requestAnimationFrame(ee);
     }
     j(() => {
-      var b;
+      var y;
       if (typeof window < "u") {
         const s = q();
-        O.value = s, r(s), z = requestAnimationFrame(ee), e.enableDemoMode && ((b = e.demoAnnotations) != null && b.length) && setTimeout(() => {
-          e.demoAnnotations.forEach((f, L) => {
+        O.value = s, u(s), z = requestAnimationFrame(ee), e.enableDemoMode && ((y = e.demoAnnotations) != null && y.length) && setTimeout(() => {
+          e.demoAnnotations.forEach((m, P) => {
             setTimeout(() => {
               x(
                 {
-                  x: f.x,
-                  y: f.y,
-                  element: f.element,
-                  elementPath: f.elementPath
+                  x: m.x,
+                  y: m.y,
+                  element: m.element,
+                  elementPath: m.elementPath
                 },
-                `Demo annotation ${L + 1}`
+                `Demo annotation ${P + 1}`
               );
-            }, L * 300);
+            }, P * 300);
           });
         }, e.demoDelay);
       }
     }), W(() => {
       z !== null && (cancelAnimationFrame(z), z = null);
     });
-    function ce(b) {
-      var f;
+    function ce(y) {
+      var m;
       if (!n.value) return;
-      const s = x(n.value, b);
-      v.value = !1, (f = e.onAnnotationAdd) == null || f.call(e, s);
+      const s = x(n.value, y);
+      g.value = !1, (m = e.onAnnotationAdd) == null || m.call(e, s);
     }
     function fe() {
-      v.value = !1, A(null);
+      g.value = !1, r(null);
     }
-    function te(b) {
-      var f;
-      const s = y(b.id);
-      s && ((f = e.onAnnotationDelete) == null || f.call(e, s));
+    function te(y) {
+      var m;
+      const s = h(y.id);
+      s && ((m = e.onAnnotationDelete) == null || m.call(e, s));
     }
     function me() {
-      var b;
-      t.value.length !== 0 && confirm("Clear all annotations?") && (E(), (b = e.onAnnotationsClear) == null || b.call(e));
+      var y;
+      t.value.length !== 0 && confirm("Clear all annotations?") && (E(), (y = e.onAnnotationsClear) == null || y.call(e));
     }
     async function pe() {
       var s;
-      const b = rt([...t.value]);
+      const y = rt([...t.value]);
       if (e.copyToClipboard)
         try {
-          await navigator.clipboard.writeText(b), c.value = !0, setTimeout(() => {
-            c.value = !1;
+          await navigator.clipboard.writeText(y), f.value = !0, setTimeout(() => {
+            f.value = !1;
           }, 2e3);
         } catch {
-          console.log(b);
+          console.log(y);
         }
-      (s = e.onCopy) == null || s.call(e, b);
+      (s = e.onCopy) == null || s.call(e, y);
     }
-    function ne(b) {
-      console.log("Marker clicked:", b);
+    function ne(y) {
+      console.log("Marker clicked:", y);
     }
-    return (b, s) => (k(), H(ke, { to: "body" }, [
+    return (y, s) => (k(), H(ke, { to: "body" }, [
       l("div", {
-        class: P(["agentation-toolbar", d(m) ? "agentation-toolbar--dark" : ""]),
+        class: L(["agentation-toolbar", d(b) ? "agentation-toolbar--dark" : ""]),
         "data-agentation-ignore": "",
         role: "toolbar",
         "aria-label": "Agentation annotation tools"
       }, [
         l("button", {
           type: "button",
-          class: P(["agentation-toolbar__button", d(F) && "agentation-toolbar__button--active"]),
+          class: L(["agentation-toolbar__button", d(F) && "agentation-toolbar__button--active"]),
           "aria-pressed": d(F),
           title: "Select element to annotate",
           onClick: s[0] || (s[0] = //@ts-ignore
-          (...f) => d(Q) && d(Q)(...f))
+          (...m) => d(Q) && d(Q)(...m))
         }, [...s[5] || (s[5] = [
           l("svg", {
             class: "agentation-toolbar__icon",
@@ -957,13 +963,13 @@ const ut = ["aria-pressed"], dt = ["aria-pressed", "title"], ct = {
         ])], 10, ut),
         l("button", {
           type: "button",
-          class: P(["agentation-toolbar__button", d(g) && "agentation-toolbar__button--paused"]),
-          "aria-pressed": d(g),
-          title: d(g) ? "Resume animations" : "Pause animations",
+          class: L(["agentation-toolbar__button", d(c) && "agentation-toolbar__button--paused"]),
+          "aria-pressed": d(c),
+          title: d(c) ? "Resume animations" : "Pause animations",
           onClick: s[1] || (s[1] = //@ts-ignore
-          (...f) => d(u) && d(u)(...f))
+          (...m) => d(A) && d(A)(...m))
         }, [
-          d(g) ? (k(), C("svg", ct, [...s[6] || (s[6] = [
+          d(c) ? (k(), C("svg", ct, [...s[6] || (s[6] = [
             l("path", { d: "M8 5v14l11-7z" }, null, -1)
           ])])) : (k(), C("svg", ft, [...s[7] || (s[7] = [
             l("path", { d: "M6 4h4v16H6V4zm8 0h4v16h-4V4z" }, null, -1)
@@ -972,12 +978,12 @@ const ut = ["aria-pressed"], dt = ["aria-pressed", "title"], ct = {
         s[13] || (s[13] = l("div", { class: "agentation-toolbar__divider" }, null, -1)),
         l("button", {
           type: "button",
-          class: P(["agentation-toolbar__button", c.value && "agentation-toolbar__button--success"]),
+          class: L(["agentation-toolbar__button", f.value && "agentation-toolbar__button--success"]),
           disabled: d(i),
           title: `Copy ${d(o)} annotation(s) as markdown`,
           onClick: pe
         }, [
-          c.value ? (k(), C("svg", pt, [...s[8] || (s[8] = [
+          f.value ? (k(), C("svg", pt, [...s[8] || (s[8] = [
             l("path", {
               "stroke-linecap": "round",
               "stroke-linejoin": "round",
@@ -1019,11 +1025,11 @@ const ut = ["aria-pressed"], dt = ["aria-pressed", "title"], ct = {
         l("button", {
           type: "button",
           class: "agentation-toolbar__button",
-          title: d(m) ? "Switch to light mode" : "Switch to dark mode",
+          title: d(b) ? "Switch to light mode" : "Switch to dark mode",
           onClick: s[2] || (s[2] = //@ts-ignore
-          (...f) => d(h) && d(h)(...f))
+          (...m) => d(v) && d(v)(...m))
         }, [
-          d(m) ? (k(), C("svg", bt, [...s[11] || (s[11] = [
+          d(b) ? (k(), C("svg", bt, [...s[11] || (s[11] = [
             l("path", { d: "M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 01-4.4 2.26 5.403 5.403 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z" }, null, -1)
           ])])) : (k(), C("svg", xt, [...s[12] || (s[12] = [
             l("path", {
@@ -1048,47 +1054,47 @@ const ut = ["aria-pressed"], dt = ["aria-pressed", "title"], ct = {
       }, [
         d(X) ? (k(), C("div", {
           key: 0,
-          class: P(["agentation-highlight__tooltip", [
+          class: L(["agentation-highlight__tooltip", [
             T.value.showBelow ? "agentation-highlight__tooltip--bottom" : "agentation-highlight__tooltip--top",
             T.value.showLeft ? "agentation-highlight__tooltip--top-right" : ""
           ]])
         }, _(d(X).name), 3)) : M("", !0)
       ], 4)) : M("", !0),
       l("div", wt, [
-        (k(!0), C(oe, null, ie(d(t).filter((f) => !f.isFixed), (f, L) => (k(), H(ae, {
-          key: f.id,
-          annotation: f,
-          index: L,
-          dark: d(m),
+        (k(!0), C(oe, null, ie(d(t).filter((m) => !m.isFixed), (m, P) => (k(), H(ae, {
+          key: m.id,
+          annotation: m,
+          index: P,
+          dark: d(b),
           "accent-color": U,
-          "is-hovered": a.value === f.id,
+          "is-hovered": a.value === m.id,
           style: { "pointer-events": "auto" },
           onClick: ne,
           onDelete: te,
-          onMouseenter: (G) => a.value = f.id,
+          onMouseenter: (G) => a.value = m.id,
           onMouseleave: s[3] || (s[3] = (G) => a.value = null)
         }, null, 8, ["annotation", "index", "dark", "is-hovered", "onMouseenter"]))), 128))
       ]),
-      (k(!0), C(oe, null, ie(d(t).filter((f) => f.isFixed), (f) => (k(), H(ae, {
-        key: f.id,
-        annotation: f,
-        index: d(t).findIndex((L) => L.id === f.id),
-        dark: d(m),
+      (k(!0), C(oe, null, ie(d(t).filter((m) => m.isFixed), (m) => (k(), H(ae, {
+        key: m.id,
+        annotation: m,
+        index: d(t).findIndex((P) => P.id === m.id),
+        dark: d(b),
         "accent-color": U,
-        "is-hovered": a.value === f.id,
+        "is-hovered": a.value === m.id,
         onClick: ne,
         onDelete: te,
-        onMouseenter: (L) => a.value = f.id,
-        onMouseleave: s[4] || (s[4] = (L) => a.value = null)
+        onMouseenter: (P) => a.value = m.id,
+        onMouseleave: s[4] || (s[4] = (P) => a.value = null)
       }, null, 8, ["annotation", "index", "dark", "is-hovered", "onMouseenter"]))), 128)),
-      v.value && d(n) ? (k(), H(Be, {
+      g.value && d(n) ? (k(), H(Be, {
         key: 1,
         element: d(n).element,
         x: w.value,
         y: S.value,
         "selected-text": d(n).selectedText,
         "computed-styles": d(n).computedStyles,
-        dark: d(m),
+        dark: d(b),
         "accent-color": U,
         onSubmit: ce,
         onCancel: fe
@@ -1107,12 +1113,12 @@ export {
   q as getCurrentRoutePath,
   tt as getDetailedComputedStyles,
   et as getElementClasses,
-  Je as getElementPath,
+  Ze as getElementPath,
   Et as getForensicComputedStyles,
-  Ze as getFullElementPath,
+  Je as getFullElementPath,
   Qe as getNearbyElements,
   Xe as getNearbyText,
-  Z as getStorageKey,
+  J as getStorageKey,
   St as identifyAnimationElement,
   re as identifyElement,
   ot as isElementFixed,

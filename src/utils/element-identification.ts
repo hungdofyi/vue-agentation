@@ -75,6 +75,7 @@ export function getFullElementPath(target: Element): string {
 /**
  * Returns a human-readable name for an element
  */
+
 export function identifyElement(target: Element): {
   name: string;
   path: string;
@@ -126,8 +127,18 @@ export function identifyElement(target: Element): {
 
   // Headings
   if (/^h[1-6]$/.test(tag)) {
-    const text = target.textContent?.trim().slice(0, 40) || "Heading";
-    return { name: `Heading: "${text}"`, path };
+    const text = target.textContent?.trim().slice(0, 40);
+    return { name: text ? `${tag}: "${text}"` : tag, path };
+  }
+
+  // Paragraphs (Specific request: "Paragraph")
+  if (tag === "p") {
+    const text = target.textContent?.trim();
+    if (text && text.length > 0) {
+      const preview = text.slice(0, 40) + (text.length > 40 ? "..." : "");
+      return { name: `Paragraph: "${preview}"`, path };
+    }
+    return { name: "Paragraph", path };
   }
 
   // Images
@@ -136,34 +147,41 @@ export function identifyElement(target: Element): {
     return { name: alt ? `Image: "${alt}"` : "Image", path };
   }
 
-  // Paragraphs and text blocks
-  if (tag === "p" || tag === "span" || tag === "div") {
-    const text = target.textContent?.trim();
-    if (text && text.length > 0) {
-      const preview = text.slice(0, 40) + (text.length > 40 ? "..." : "");
-      return { name: `Text: "${preview}"`, path };
+  // Lists
+  if (tag === "li") {
+    return { name: "List item", path };
+  }
+
+  // Check for significant class for any element not caught above
+  // (div, span, article, section, strong, etc.)
+  if (target.classList.length > 0) {
+    const significantClass = Array.from(target.classList).find((c) => {
+        // Filter out CSS module hashes and common utility-like patterns if needed
+        // For now, filtering hashes similar to getElementClasses
+        if (c.match(/^_[a-zA-Z0-9]+$/)) return false;
+        if (c.match(/[A-Za-z]+_[a-z0-9]{5,}$/)) return false;
+        return true;
+    });
+    
+    if (significantClass) {
+        return { name: `${tag}.${significantClass}`, path };
     }
   }
 
-  // Lists
-  if (tag === "li") {
-    const text = target.textContent?.trim().slice(0, 40) || "List item";
-    return { name: `List item: "${text}"`, path };
-  }
-
-  // Nav, header, footer, main, section, article
+  // Nav, header, footer, main, section, article - check for aria-label
   if (["nav", "header", "footer", "main", "section", "article"].includes(tag)) {
     const ariaLabel = target.getAttribute("aria-label");
-    return {
-      name: ariaLabel ? `${tag}: "${ariaLabel}"` : tag,
-      path,
-    };
+    if (ariaLabel) {
+      return {
+        name: `${tag}: "${ariaLabel}"`,
+        path,
+      };
+    }
   }
 
-  // Default: use tag name and first class
-  const className = target.classList[0];
+  // Default fallback
   return {
-    name: className ? `${tag}.${className}` : tag,
+    name: tag,
     path,
   };
 }
