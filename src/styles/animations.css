@@ -1,0 +1,151 @@
+/**
+ * Vue Agentation - Animation Styles
+ * 
+ * This is a Vue 3 port of Agentation by Benji Taylor
+ * Original: https://github.com/benjitaylor/agentation
+ * License: PolyForm Shield License 1.0.0
+ */
+
+/* ============================================
+   Keyframes
+   ============================================ */
+@keyframes agentation-ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes agentation-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-4px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(4px);
+  }
+}
+
+@keyframes agentation-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes agentation-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes agentation-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(0.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   Animation Classes
+   ============================================ */
+.agentation-animate-ping {
+  animation: agentation-ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.agentation-animate-shake {
+  animation: agentation-shake 0.5s ease-in-out;
+}
+
+.agentation-animate-fade-in {
+  animation: agentation-fade-in 0.15s ease-out;
+}
+
+.agentation-animate-scale-in {
+  animation: agentation-scale-in 0.15s ease-out;
+}
+
+.agentation-animate-slide-up {
+  animation: agentation-slide-up 0.15s ease-out;
+}
+
+/* ============================================
+   Transition Classes
+   ============================================ */
+.agentation-transition-enter {
+  opacity: 0;
+  transform: scale(0.95) translateY(0.25rem);
+}
+
+.agentation-transition-enter-active {
+  transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+}
+
+.agentation-transition-enter-to {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.agentation-transition-leave {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.agentation-transition-leave-active {
+  transition: opacity 0.1s ease-in, transform 0.1s ease-in;
+}
+
+.agentation-transition-leave-to {
+  opacity: 0;
+  transform: scale(0.95) translateY(0.25rem);
+}
+
+/* ============================================
+   State Animations
+   ============================================ */
+.agentation-marker--entering {
+  opacity: 0;
+  transform: translateX(-50%) scale(0);
+}
+
+.agentation-marker--entered {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+}
+
+.agentation-marker--exiting {
+  opacity: 0;
+  transform: translateX(-50%) scale(0);
+  transition: opacity 0.2s ease-in, transform 0.2s ease-in;
+}
+
+.agentation-popup--entering {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.agentation-popup--entered {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+}
+
+.agentation-popup--exiting {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.15s ease-in, transform 0.15s ease-in;
+}

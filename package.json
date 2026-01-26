@@ -1,0 +1,53 @@
+{
+  "name": "vue-agentation",
+  "version": "1.0.0",
+  "description": "Vue 3 port of Agentation - A visual feedback tool for AI agents",
+  "keywords": [
+    "vue",
+    "vue3",
+    "annotation",
+    "agentation",
+    "ai-agents",
+    "feedback",
+    "ui"
+  ],
+  "author": "",
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "type": "module",
+  "main": "./dist/vue-agentation.umd.js",
+  "module": "./dist/vue-agentation.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/vue-agentation.es.js",
+      "require": "./dist/vue-agentation.umd.js"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.0",
+    "typescript": "^5.6.0",
+    "vite": "^6.0.0",
+    "vite-plugin-dts": "^4.3.0",
+    "vue": "^3.5.0",
+    "vue-tsc": "^2.1.0"
+  }
+}
