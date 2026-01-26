@@ -38,7 +38,8 @@
     "dev": "vite",
     "build": "vite build",
     "typecheck": "vue-tsc --noEmit",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "playground": "vite --config playground/vite.config.ts"
   },
   "peerDependencies": {
     "vue": "^3.0.0"
