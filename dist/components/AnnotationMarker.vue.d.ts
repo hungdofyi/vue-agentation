@@ -16,10 +16,12 @@ declare const _default: import('vue').DefineComponent<Props, {}, {}, {}, {}, imp
     mouseenter: (annotation: Annotation) => any;
     mouseleave: (annotation: Annotation) => any;
     delete: (annotation: Annotation) => any;
+    edit: (annotation: Annotation) => any;
 }, string, import('vue').PublicProps, Readonly<Props> & Readonly<{
     onClick?: ((annotation: Annotation) => any) | undefined;
     onMouseenter?: ((annotation: Annotation) => any) | undefined;
     onMouseleave?: ((annotation: Annotation) => any) | undefined;
     onDelete?: ((annotation: Annotation) => any) | undefined;
+    onEdit?: ((annotation: Annotation) => any) | undefined;
 }>, {}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, HTMLDivElement>;
 export default _default;

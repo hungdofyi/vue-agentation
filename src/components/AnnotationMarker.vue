@@ -33,6 +33,7 @@ const {
 const emit = defineEmits<{
   click: [annotation: Annotation];
   delete: [annotation: Annotation];
+  edit: [annotation: Annotation];
   mouseenter: [annotation: Annotation];
   mouseleave: [annotation: Annotation];
 }>();
@@ -73,6 +74,12 @@ function handleDelete(event: MouseEvent) {
   setTimeout(() => {
     emit("delete", annotation);
   }, 200);
+}
+
+function handleEdit(event: MouseEvent) {
+  event.stopPropagation();
+  // Don't close tooltip immediately, let parent handle logic
+  emit("edit", annotation);
 }
 
 function handleMouseEnter() {
@@ -147,18 +154,43 @@ onMounted(() => {
       >
         <!-- Header -->
         <div class="agentation-marker__tooltip-header">
-          <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div class="agentation-marker__tooltip-content">
             <span class="agentation-marker__tooltip-title">
               {{ annotation.element }}
             </span>
+            <p class="agentation-marker__tooltip-path">
+              {{ annotation.elementPath }}
+            </p>
+          </div>
+          <div class="agentation-marker__tooltip-actions">
             <button
               type="button"
-              class="agentation-marker__tooltip-delete"
+              class="agentation-marker__tooltip-action"
+              title="Edit annotation"
+              @click.stop="handleEdit"
+            >
+              <svg
+                class="agentation-marker__tooltip-action-icon"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                />
+              </svg>
+            </button>
+            <button
+              type="button"
+              class="agentation-marker__tooltip-action"
               title="Delete annotation"
               @click="handleDelete"
             >
               <svg
-                class="agentation-marker__tooltip-delete-icon"
+                class="agentation-marker__tooltip-action-icon"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -172,9 +204,6 @@ onMounted(() => {
               </svg>
             </button>
           </div>
-          <p class="agentation-marker__tooltip-path">
-            {{ annotation.elementPath }}
-          </p>
         </div>
 
         <!-- Comment -->

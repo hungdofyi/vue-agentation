@@ -27,32 +27,7 @@ export interface Annotation {
 }
 
 export interface AgentationProps {
-  /** Demo annotations to display on mount */
-  demoAnnotations?: DemoAnnotation[];
-  /** Delay before demo annotations appear (ms) */
-  demoDelay?: number;
-  /** Enable demo mode with pre-populated annotations */
-  enableDemoMode?: boolean;
-  /** Whether to copy markdown to clipboard on copy action */
-  copyToClipboard?: boolean;
-  /** Callback when annotation is added */
-  onAnnotationAdd?: (annotation: Annotation) => void;
-  /** Callback when annotation is deleted */
-  onAnnotationDelete?: (annotation: Annotation) => void;
-  /** Callback when annotation is updated */
-  onAnnotationUpdate?: (annotation: Annotation) => void;
-  /** Callback when all annotations are cleared */
-  onAnnotationsClear?: () => void;
-  /** Callback when markdown is copied */
-  onCopy?: (markdown: string) => void;
-}
-
-export interface DemoAnnotation {
-  x: number;
-  y: number;
-  comment: string;
-  element: string;
-  elementPath: string;
+  // No props required for now as demo props and copyToClipboard were removed
 }
 
 export interface AgentationSettings {

@@ -17,30 +17,32 @@ import { useTheme } from "../composables/useTheme";
 import { generateMarkdown } from "../utils/markdown-output";
 import { getCurrentRoutePath } from "../utils/storage";
 
-const {
-  demoAnnotations,
-  demoDelay = 1000,
-  enableDemoMode = false,
-  copyToClipboard = true,
-  onAnnotationAdd,
-  onAnnotationDelete,
-  // onAnnotationUpdate - available for future use
-  onAnnotationsClear,
-  onCopy,
-} = defineProps<AgentationProps>();
+defineProps<AgentationProps>();
+
+const emit = defineEmits<{
+  (e: "annotation-add", annotation: Annotation): void;
+  (e: "annotation-delete", annotation: Annotation): void;
+  (e: "annotation-update", annotation: Annotation): void;
+  (e: "annotations-clear"): void;
+  (e: "copy", markdown: string): void;
+}>();
 
 // Composables
 const {
   annotations,
   pendingAnnotation,
+  editingAnnotationId,
   count: annotationCount,
   isEmpty,
   initialize: initAnnotations,
   switchPath,
   add: addAnnotation,
   remove: removeAnnotation,
+  update: updateAnnotation,
   clear: clearAnnotations,
   setPending,
+  setEditing,
+  getById: getAnnotationById,
 } = useAnnotations();
 
 const { isPaused, toggle: toggleAnimations } = useAnimationPause();
@@ -54,18 +56,61 @@ const accentColor = "#3b82f6"; // Blue-500
 
 // Computed popup position (to avoid using window in template)
 const popupX = computed(() => {
-  if (!pendingAnnotation.value) return 0;
-  return (
-    (pendingAnnotation.value.x / 100) *
-    (typeof window !== "undefined" ? window.innerWidth : 0)
-  );
+  if (pendingAnnotation.value) {
+    return (
+      (pendingAnnotation.value.x / 100) *
+      (typeof window !== "undefined" ? window.innerWidth : 0)
+    );
+  } else if (editingAnnotationId.value) {
+    // When editing, find the annotation and position popup near it
+    const annotation = getAnnotationById(editingAnnotationId.value);
+    if (!annotation) return 0;
+    return (
+      (annotation.x / 100) *
+      (typeof window !== "undefined" ? window.innerWidth : 0)
+    );
+  }
+  return 0;
 });
+
 const popupY = computed(() => {
-  if (!pendingAnnotation.value) return 0;
-  const scrollY = typeof window !== "undefined" ? window.scrollY : 0;
-  return pendingAnnotation.value.isFixed
-    ? pendingAnnotation.value.y
-    : pendingAnnotation.value.y - scrollY;
+  if (pendingAnnotation.value) {
+    const scrollY = typeof window !== "undefined" ? window.scrollY : 0;
+    return pendingAnnotation.value.isFixed
+      ? pendingAnnotation.value.y
+      : pendingAnnotation.value.y - scrollY;
+  } else if (editingAnnotationId.value) {
+    const annotation = getAnnotationById(editingAnnotationId.value);
+    if (!annotation) return 0;
+    const scrollY = typeof window !== "undefined" ? window.scrollY : 0;
+    return annotation.isFixed ? annotation.y : annotation.y - scrollY;
+  }
+  return 0;
+});
+
+// Helper to get current annotation being edited or created
+const currentAnnotationData = computed(() => {
+  if (pendingAnnotation.value) {
+    return {
+      element: pendingAnnotation.value.element,
+      selectedText: pendingAnnotation.value.selectedText,
+      computedStyles: pendingAnnotation.value.computedStyles,
+      initialValue: "",
+      submitLabel: "Add",
+    };
+  } else if (editingAnnotationId.value) {
+    const annotation = getAnnotationById(editingAnnotationId.value);
+    if (annotation) {
+      return {
+        element: annotation.element,
+        selectedText: annotation.selectedText,
+        computedStyles: annotation.computedStyles,
+        initialValue: annotation.comment,
+        submitLabel: "Update",
+      };
+    }
+  }
+  return null;
 });
 
 // Tooltip position: determines optimal placement based on viewport boundaries
@@ -107,6 +152,7 @@ const {
 } = useElementSelection({
   onSelect: (pending: PendingAnnotation) => {
     setPending(pending);
+    setEditing(null);
     showPopup.value = true;
   },
   onHoverChange: () => {
@@ -142,25 +188,6 @@ onMounted(() => {
 
     // Use requestAnimationFrame for instant route change detection (~16ms)
     rafId = requestAnimationFrame(checkRouteLoop);
-
-    // Demo mode
-    if (enableDemoMode && demoAnnotations?.length) {
-      setTimeout(() => {
-        demoAnnotations.forEach((demo, i) => {
-          setTimeout(() => {
-            addAnnotation(
-              {
-                x: demo.x,
-                y: demo.y,
-                element: demo.element,
-                elementPath: demo.elementPath,
-              },
-              `Demo annotation ${i + 1}`,
-            );
-          }, i * 300);
-        });
-      }, demoDelay);
-    }
   }
 });
 
@@ -174,23 +201,37 @@ onUnmounted(() => {
 
 // Handlers
 function handlePopupSubmit(comment: string) {
-  if (!pendingAnnotation.value) return;
-
-  const annotation = addAnnotation(pendingAnnotation.value, comment);
-  showPopup.value = false;
-  onAnnotationAdd?.(annotation);
+  if (pendingAnnotation.value) {
+    const annotation = addAnnotation(pendingAnnotation.value, comment);
+    showPopup.value = false;
+    emit("annotation-add", annotation);
+  } else if (editingAnnotationId.value) {
+    const updated = updateAnnotation(editingAnnotationId.value, comment);
+    showPopup.value = false;
+    setEditing(null);
+    if (updated) {
+      emit("annotation-update", updated);
+    }
+  }
 }
 
 function handlePopupCancel() {
   showPopup.value = false;
   setPending(null);
+  setEditing(null);
 }
 
 function handleMarkerDelete(annotation: Annotation) {
   const removed = removeAnnotation(annotation.id);
   if (removed) {
-    onAnnotationDelete?.(removed);
+    emit("annotation-delete", removed);
   }
+}
+
+function handleMarkerEdit(annotation: Annotation) {
+  setPending(null);
+  setEditing(annotation.id);
+  showPopup.value = true;
 }
 
 function handleClearAll() {
@@ -198,31 +239,29 @@ function handleClearAll() {
 
   if (confirm("Clear all annotations?")) {
     clearAnnotations();
-    onAnnotationsClear?.();
+    emit("annotations-clear");
   }
 }
 
 async function handleCopy() {
   const markdown = generateMarkdown([...annotations.value]);
 
-  if (copyToClipboard) {
-    try {
-      await navigator.clipboard.writeText(markdown);
-      copySuccess.value = true;
-      setTimeout(() => {
-        copySuccess.value = false;
-      }, 2000);
-    } catch {
-      // Fallback: log to console
-      console.log(markdown);
-    }
+  try {
+    await navigator.clipboard.writeText(markdown);
+    copySuccess.value = true;
+    setTimeout(() => {
+      copySuccess.value = false;
+    }, 2000);
+  } catch {
+    // Fallback: log to console
+    console.log(markdown);
   }
 
-  onCopy?.(markdown);
+  emit("copy", markdown);
 }
 
 function handleMarkerClick(annotation: Annotation) {
-  // Could open edit mode here
+  // Marker click action - currently does nothing, but could focus the annotation
   console.log("Marker clicked:", annotation);
 }
 </script>
@@ -427,6 +466,7 @@ function handleMarkerClick(annotation: Annotation) {
         :is-hovered="hoveredMarkerId === annotation.id"
         style="pointer-events: auto"
         @click="handleMarkerClick"
+        @edit="handleMarkerEdit"
         @delete="handleMarkerDelete"
         @mouseenter="hoveredMarkerId = annotation.id"
         @mouseleave="hoveredMarkerId = null"
@@ -443,6 +483,7 @@ function handleMarkerClick(annotation: Annotation) {
       :accent-color="accentColor"
       :is-hovered="hoveredMarkerId === annotation.id"
       @click="handleMarkerClick"
+      @edit="handleMarkerEdit"
       @delete="handleMarkerDelete"
       @mouseenter="hoveredMarkerId = annotation.id"
       @mouseleave="hoveredMarkerId = null"
@@ -450,12 +491,14 @@ function handleMarkerClick(annotation: Annotation) {
 
     <!-- Annotation Popup -->
     <AnnotationPopup
-      v-if="showPopup && pendingAnnotation"
-      :element="pendingAnnotation.element"
+      v-if="showPopup && currentAnnotationData"
+      :element="currentAnnotationData.element"
       :x="popupX"
       :y="popupY"
-      :selected-text="pendingAnnotation.selectedText"
-      :computed-styles="pendingAnnotation.computedStyles"
+      :selected-text="currentAnnotationData.selectedText"
+      :computed-styles="currentAnnotationData.computedStyles"
+      :initial-value="currentAnnotationData.initialValue"
+      :submit-label="currentAnnotationData.submitLabel"
       :dark="isDark"
       :accent-color="accentColor"
       @submit="handlePopupSubmit"

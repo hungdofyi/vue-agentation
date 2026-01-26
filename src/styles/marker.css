@@ -1,18 +1,7 @@
-/**
- * Vue Agentation - Marker Styles
- * 
- * This is a Vue 3 port of Agentation by Benji Taylor
- * Original: https://github.com/benjitaylor/agentation
- * License: PolyForm Shield License 1.0.0
- */
-
-/* ============================================
-   Marker
-   ============================================ */
 .agentation-marker {
   z-index: var(--agentation-z-marker);
   cursor: pointer;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
 }
 
 .agentation-marker--fixed {
@@ -45,16 +34,17 @@
 
 .agentation-marker__ping {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   border-radius: 9999px;
   background-color: var(--agentation-accent-color);
   opacity: 0.3;
   animation: agentation-ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
-/* ============================================
-   Marker Tooltip
-   ============================================ */
+/* Tooltip */
 .agentation-marker__tooltip {
   position: absolute;
   top: 0;
@@ -80,10 +70,12 @@
   left: calc(100% + 0.5rem);
 }
 
+/* Header */
 .agentation-marker__tooltip-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.5rem;
   padding: 0.5rem 0.75rem;
   border-bottom: 1px solid var(--agentation-border-light);
 }
@@ -92,7 +84,13 @@
   border-bottom-color: var(--agentation-border-dark);
 }
 
+.agentation-marker__tooltip-content {
+  min-width: 0;
+  flex: 1;
+}
+
 .agentation-marker__tooltip-title {
+  display: block;
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--agentation-text-light);
@@ -118,7 +116,14 @@
   color: var(--agentation-text-muted-dark);
 }
 
-.agentation-marker__tooltip-delete {
+/* Actions */
+.agentation-marker__tooltip-actions {
+  display: flex;
+  gap: 0.25rem;
+  flex-shrink: 0;
+}
+
+.agentation-marker__tooltip-action {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -126,20 +131,40 @@
   border: none;
   border-radius: 0.25rem;
   background: transparent;
-  color: #ef4444;
+  color: var(--agentation-text-muted-light);
   cursor: pointer;
-  transition: background-color 0.15s ease;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-.agentation-marker__tooltip-delete:hover {
+.agentation-marker__tooltip-action:hover {
+  background-color: var(--agentation-hover-light);
+  color: var(--agentation-accent-color);
+}
+
+.agentation-marker__tooltip--dark .agentation-marker__tooltip-action {
+  color: var(--agentation-text-muted-dark);
+}
+
+.agentation-marker__tooltip--dark .agentation-marker__tooltip-action:hover {
+  background-color: var(--agentation-hover-dark);
+}
+
+/* Delete specific hover */
+.agentation-marker__tooltip-action[title*="Delete"]:hover {
   background-color: #fee2e2;
+  color: #ef4444;
 }
 
-.agentation-marker__tooltip-delete-icon {
+.agentation-marker__tooltip--dark .agentation-marker__tooltip-action[title*="Delete"]:hover {
+  background-color: rgba(239, 68, 68, 0.2);
+}
+
+.agentation-marker__tooltip-action-icon {
   width: 1rem;
   height: 1rem;
 }
 
+/* Body */
 .agentation-marker__tooltip-body {
   padding: 0.5rem 0.75rem;
 }
@@ -147,6 +172,8 @@
 .agentation-marker__tooltip-comment {
   font-size: 0.875rem;
   color: var(--agentation-text-light);
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .agentation-marker__tooltip--dark .agentation-marker__tooltip-comment {
@@ -155,15 +182,23 @@
 
 .agentation-marker__tooltip-selected-text {
   margin-top: 0.5rem;
+  padding-left: 0.5rem;
+  border-left: 2px solid var(--agentation-border-light);
   font-size: 0.75rem;
   font-style: italic;
   color: var(--agentation-text-muted-light);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .agentation-marker__tooltip--dark .agentation-marker__tooltip-selected-text {
+  border-left-color: var(--agentation-border-dark);
   color: var(--agentation-text-muted-dark);
 }
 
+/* Footer */
 .agentation-marker__tooltip-footer {
   padding: 0.5rem 0.75rem;
   border-top: 1px solid var(--agentation-border-light);

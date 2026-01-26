@@ -55,15 +55,6 @@ import 'vue-agentation/style.css'
 </template>
 ```
 
-## Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `enableDemoMode` | `boolean` | `false` | Enable demo mode with pre-populated annotations |
-| `demoAnnotations` | `DemoAnnotation[]` | `[]` | Demo annotations to display on mount |
-| `demoDelay` | `number` | `1000` | Delay before demo annotations appear (ms) |
-| `copyToClipboard` | `boolean` | `true` | Whether to copy markdown to clipboard on copy action |
-
 ## Events
 
 | Event | Payload | Description |
