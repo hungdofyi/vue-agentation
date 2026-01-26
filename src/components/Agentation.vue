@@ -68,18 +68,34 @@ const popupY = computed(() => {
     : pendingAnnotation.value.y - scrollY;
 });
 
-// Tooltip position: show below if element is near top of viewport
+// Tooltip position: determines optimal placement based on viewport boundaries
 const tooltipPosition = computed(() => {
-  if (!highlightBox.value) return { showBelow: false, showLeft: false };
+  if (!highlightBox.value) return { vertical: "top", horizontal: "left" };
+
   const TOOLTIP_HEIGHT = 32;
-  const TOOLTIP_PADDING = 8;
+  const TOOLTIP_WIDTH_ESTIMATE = 150; // Estimated max tooltip width
+  const PADDING = 8;
   const viewportWidth =
     typeof window !== "undefined" ? window.innerWidth : 1000;
 
-  const showBelow = highlightBox.value.top < TOOLTIP_HEIGHT + TOOLTIP_PADDING;
-  const showLeft = highlightBox.value.left > viewportWidth - 200;
+  // Check vertical positioning
+  const needsBelow = highlightBox.value.top < TOOLTIP_HEIGHT + PADDING;
 
-  return { showBelow, showLeft };
+  // Check horizontal positioning - tooltip extends from left edge of highlight
+  // If the element's left + tooltip width exceeds viewport, align to right
+  const tooltipWouldOverflowRight =
+    highlightBox.value.left + TOOLTIP_WIDTH_ESTIMATE > viewportWidth - PADDING;
+
+  // If element is near left edge and we want right alignment, check if that works
+  const tooltipWouldOverflowLeft =
+    highlightBox.value.left + highlightBox.value.width <
+    TOOLTIP_WIDTH_ESTIMATE + PADDING;
+
+  return {
+    vertical: needsBelow ? "bottom" : "top",
+    horizontal:
+      tooltipWouldOverflowRight && !tooltipWouldOverflowLeft ? "right" : "left",
+  };
 });
 
 // Element selection
@@ -230,7 +246,11 @@ function handleMarkerClick(annotation: Annotation) {
         title="Select element to annotate"
         @click="toggleSelection"
       >
-        <svg class="agentation-toolbar__icon" fill="currentColor" viewBox="0 0 24 24">
+        <svg
+          class="agentation-toolbar__icon"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             d="M4 4l7.07 17 2.51-7.39L21 11.07 4 4zm9.33 8.33l-1.62 4.79L6.27 6.27l10.85 5.06-3.79 1z"
           />
@@ -254,7 +274,12 @@ function handleMarkerClick(annotation: Annotation) {
         >
           <path d="M8 5v14l11-7z" />
         </svg>
-        <svg v-else class="agentation-toolbar__icon" fill="currentColor" viewBox="0 0 24 24">
+        <svg
+          v-else
+          class="agentation-toolbar__icon"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
         </svg>
       </button>
@@ -300,10 +325,7 @@ function handleMarkerClick(annotation: Annotation) {
           />
         </svg>
         <!-- Badge showing count -->
-        <span
-          v-if="annotationCount > 0"
-          class="agentation-toolbar__badge"
-        >
+        <span v-if="annotationCount > 0" class="agentation-toolbar__badge">
           {{ annotationCount }}
         </span>
       </button>
@@ -384,10 +406,7 @@ function handleMarkerClick(annotation: Annotation) {
       <div
         v-if="elementInfo"
         class="agentation-highlight__tooltip"
-        :class="[
-          tooltipPosition.showBelow ? 'agentation-highlight__tooltip--bottom' : 'agentation-highlight__tooltip--top',
-          tooltipPosition.showLeft ? 'agentation-highlight__tooltip--top-right' : '',
-        ]"
+        :class="`agentation-highlight__tooltip--${tooltipPosition.vertical}-${tooltipPosition.horizontal}`"
       >
         {{ elementInfo.name }}
       </div>
@@ -395,7 +414,7 @@ function handleMarkerClick(annotation: Annotation) {
 
     <!-- Annotation Markers Container (for scrolling elements) -->
     <div
-      style="position: absolute; inset: 0; z-index: 99998; pointer-events: none;"
+      style="position: absolute; inset: 0; z-index: 99998; pointer-events: none"
       data-agentation-ignore
     >
       <AnnotationMarker
@@ -406,7 +425,7 @@ function handleMarkerClick(annotation: Annotation) {
         :dark="isDark"
         :accent-color="accentColor"
         :is-hovered="hoveredMarkerId === annotation.id"
-        style="pointer-events: auto;"
+        style="pointer-events: auto"
         @click="handleMarkerClick"
         @delete="handleMarkerDelete"
         @mouseenter="hoveredMarkerId = annotation.id"

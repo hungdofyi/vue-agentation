@@ -1,14 +1,14 @@
-import { defineComponent as Z, ref as $, computed as D, onMounted as j, nextTick as ge, onUnmounted as W, openBlock as k, createElementBlock as C, normalizeStyle as N, normalizeClass as L, createElementVNode as l, toDisplayString as _, createCommentVNode as M, withDirectives as he, vModelText as ve, createTextVNode as V, createVNode as ye, Transition as be, withCtx as xe, withModifiers as we, readonly as B, createBlock as H, Teleport as ke, unref as d, Fragment as oe, renderList as ie } from "vue";
-const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { class: "agentation-popup__header-content" }, Se = { class: "agentation-popup__header-title" }, Ee = {
+import { defineComponent as Z, ref as $, computed as D, onMounted as j, nextTick as ve, onUnmounted as V, openBlock as k, createElementBlock as C, normalizeStyle as N, normalizeClass as M, createElementVNode as l, toDisplayString as _, createCommentVNode as I, withDirectives as ye, vModelText as be, createTextVNode as W, createVNode as xe, Transition as we, withCtx as ke, withModifiers as $e, readonly as B, createBlock as H, Teleport as Ce, unref as d, Fragment as oe, renderList as ie } from "vue";
+const Ae = ["aria-label"], Se = { class: "agentation-popup__header" }, Ee = { class: "agentation-popup__header-content" }, _e = { class: "agentation-popup__header-title" }, Te = {
   key: 0,
   class: "agentation-popup__header-selected"
-}, _e = { class: "agentation-popup__body" }, Te = {
+}, Pe = { class: "agentation-popup__body" }, Le = {
   key: 0,
   style: { "margin-top": "0.5rem" }
-}, Pe = {
+}, Me = {
   key: 0,
   class: "agentation-popup__styles-pre"
-}, Le = { class: "agentation-popup__footer" }, Me = { class: "agentation-popup__actions" }, Be = /* @__PURE__ */ Z({
+}, Ie = { class: "agentation-popup__footer" }, Be = { class: "agentation-popup__actions" }, De = /* @__PURE__ */ Z({
   __name: "AnnotationPopup",
   props: {
     element: {},
@@ -52,7 +52,7 @@ const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { cl
       g.key === "Enter" && (g.metaKey || g.ctrlKey) ? (g.preventDefault(), r()) : g.key === "Escape" && (g.preventDefault(), c());
     }
     j(() => {
-      h.value = "enter", ge(() => {
+      h.value = "enter", ve(() => {
         var g;
         h.value = "entered", (g = u.value) == null || g.focus();
       });
@@ -62,10 +62,10 @@ const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { cl
     }
     return j(() => {
       document.addEventListener("keydown", v);
-    }), W(() => {
+    }), V(() => {
       document.removeEventListener("keydown", v);
     }), t({ shake: A }), (g, a) => (k(), C("div", {
-      class: L(["agentation-popup", [
+      class: M(["agentation-popup", [
         e.dark ? "agentation-popup--dark" : "",
         p.value && "agentation-animate-shake",
         h.value === "initial" && "agentation-popup--entering",
@@ -79,35 +79,35 @@ const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { cl
       "aria-modal": "true",
       "aria-label": `Add annotation for ${e.element}`
     }, [
-      l("div", Ce, [
-        l("div", Ae, [
+      l("div", Se, [
+        l("div", Ee, [
           l("div", {
             class: "agentation-popup__header-dot",
             style: N({ backgroundColor: e.accentColor })
           }, null, 4),
-          l("span", Se, _(e.element), 1)
+          l("span", _e, _(e.element), 1)
         ]),
-        e.selectedText ? (k(), C("p", Ee, ' "' + _(e.selectedText) + '" ', 1)) : M("", !0)
+        e.selectedText ? (k(), C("p", Te, ' "' + _(e.selectedText) + '" ', 1)) : I("", !0)
       ]),
-      l("div", _e, [
-        he(l("textarea", {
+      l("div", Pe, [
+        ye(l("textarea", {
           ref_key: "textareaRef",
           ref: u,
-          "onUpdate:modelValue": a[0] || (a[0] = (f) => i.value = f),
+          "onUpdate:modelValue": a[0] || (a[0] = (m) => i.value = m),
           class: "agentation-popup__textarea",
           placeholder: "Add your comment...",
           onKeydown: b
         }, null, 544), [
-          [ve, i.value]
+          [be, i.value]
         ]),
-        e.computedStyles ? (k(), C("div", Te, [
+        e.computedStyles ? (k(), C("div", Le, [
           l("button", {
             type: "button",
             class: "agentation-popup__styles-toggle",
-            onClick: a[1] || (a[1] = (f) => x.value = !x.value)
+            onClick: a[1] || (a[1] = (m) => x.value = !x.value)
           }, [
             (k(), C("svg", {
-              class: L(["agentation-popup__styles-icon", x.value && "agentation-popup__styles-icon--open"]),
+              class: M(["agentation-popup__styles-icon", x.value && "agentation-popup__styles-icon--open"]),
               fill: "none",
               stroke: "currentColor",
               viewBox: "0 0 24 24"
@@ -119,19 +119,19 @@ const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { cl
                 d: "M9 5l7 7-7 7"
               }, null, -1)
             ])], 2)),
-            a[3] || (a[3] = V(" Computed styles ", -1))
+            a[3] || (a[3] = W(" Computed styles ", -1))
           ]),
-          x.value ? (k(), C("pre", Pe, _(e.computedStyles), 1)) : M("", !0)
-        ])) : M("", !0)
+          x.value ? (k(), C("pre", Me, _(e.computedStyles), 1)) : I("", !0)
+        ])) : I("", !0)
       ]),
-      l("div", Le, [
+      l("div", Ie, [
         a[4] || (a[4] = l("span", { class: "agentation-popup__shortcut" }, [
           l("kbd", { class: "agentation-popup__kbd" }, "⌘"),
-          V(" + "),
+          W(" + "),
           l("kbd", { class: "agentation-popup__kbd" }, "Enter"),
-          V(" to submit ")
+          W(" to submit ")
         ], -1)),
-        l("div", Me, [
+        l("div", Be, [
           l("button", {
             type: "button",
             class: "agentation-popup__btn agentation-popup__btn--cancel",
@@ -145,12 +145,12 @@ const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { cl
           }, _(e.submitLabel), 5)
         ])
       ])
-    ], 14, $e));
+    ], 14, Ae));
   }
-}), Ie = { class: "agentation-marker__tooltip-header" }, De = { style: { display: "flex", "align-items": "center", "justify-content": "space-between" } }, Ne = { class: "agentation-marker__tooltip-title" }, Fe = { class: "agentation-marker__tooltip-path" }, ze = { class: "agentation-marker__tooltip-body" }, je = { class: "agentation-marker__tooltip-comment" }, He = {
+}), Ne = { class: "agentation-marker__tooltip-header" }, Fe = { style: { display: "flex", "align-items": "center", "justify-content": "space-between" } }, ze = { class: "agentation-marker__tooltip-title" }, je = { class: "agentation-marker__tooltip-path" }, He = { class: "agentation-marker__tooltip-body" }, We = { class: "agentation-marker__tooltip-comment" }, Re = {
   key: 0,
   class: "agentation-marker__tooltip-selected-text"
-}, Ve = { class: "agentation-marker__tooltip-footer" }, Re = /* @__PURE__ */ Z({
+}, Ve = { class: "agentation-marker__tooltip-footer" }, Oe = /* @__PURE__ */ Z({
   __name: "AnnotationMarker",
   props: {
     annotation: {},
@@ -188,7 +188,7 @@ const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { cl
         });
       });
     }), (c, A) => (k(), C("div", {
-      class: L(["agentation-marker", [
+      class: M(["agentation-marker", [
         e.annotation.isFixed ? "agentation-marker--fixed" : "agentation-marker--absolute",
         i.value === "initial" && "agentation-marker--entering",
         i.value === "enter" && "agentation-marker--entering",
@@ -202,16 +202,16 @@ const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { cl
       onClick: x
     }, [
       l("div", {
-        class: L(["agentation-marker__dot", [e.isHovered && "agentation-marker__dot--hovered"]]),
+        class: M(["agentation-marker__dot", [e.isHovered && "agentation-marker__dot--hovered"]]),
         style: N({ backgroundColor: e.accentColor })
       }, [
-        V(_(e.index + 1) + " ", 1),
+        W(_(e.index + 1) + " ", 1),
         l("div", {
           class: "agentation-marker__ping agentation-animate-ping",
           style: N({ backgroundColor: e.accentColor })
         }, null, 4)
       ], 6),
-      ye(be, {
+      xe(we, {
         "enter-active-class": "agentation-transition-enter-active",
         "enter-from-class": "agentation-transition-enter",
         "enter-to-class": "agentation-transition-enter-to",
@@ -219,19 +219,19 @@ const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { cl
         "leave-from-class": "agentation-transition-leave",
         "leave-to-class": "agentation-transition-leave-to"
       }, {
-        default: xe(() => [
+        default: ke(() => [
           o.value ? (k(), C("div", {
             key: 0,
-            class: L(["agentation-marker__tooltip", [
+            class: M(["agentation-marker__tooltip", [
               e.dark ? "agentation-marker__tooltip--dark" : "",
               p.value === "left" ? "agentation-marker__tooltip--left" : "agentation-marker__tooltip--right"
             ]]),
-            onClick: A[0] || (A[0] = we(() => {
+            onClick: A[0] || (A[0] = $e(() => {
             }, ["stop"]))
           }, [
-            l("div", Ie, [
-              l("div", De, [
-                l("span", Ne, _(e.annotation.element), 1),
+            l("div", Ne, [
+              l("div", Fe, [
+                l("span", ze, _(e.annotation.element), 1),
                 l("button", {
                   type: "button",
                   class: "agentation-marker__tooltip-delete",
@@ -253,27 +253,27 @@ const $e = ["aria-label"], Ce = { class: "agentation-popup__header" }, Ae = { cl
                   ], -1)
                 ])])
               ]),
-              l("p", Fe, _(e.annotation.elementPath), 1)
+              l("p", je, _(e.annotation.elementPath), 1)
             ]),
-            l("div", ze, [
-              l("p", je, _(e.annotation.comment), 1),
-              e.annotation.selectedText ? (k(), C("p", He, ' "' + _(e.annotation.selectedText) + '" ', 1)) : M("", !0)
+            l("div", He, [
+              l("p", We, _(e.annotation.comment), 1),
+              e.annotation.selectedText ? (k(), C("p", Re, ' "' + _(e.annotation.selectedText) + '" ', 1)) : I("", !0)
             ]),
             l("div", Ve, _(new Date(e.annotation.timestamp).toLocaleString()), 1)
-          ], 2)) : M("", !0)
+          ], 2)) : I("", !0)
         ]),
         _: 1
       })
     ], 38));
   }
-}), We = (e, t) => {
+}), Ge = (e, t) => {
   const n = e.__vccOpts || e;
   for (const [o, i] of t)
     n[o] = i;
   return n;
-}, ae = /* @__PURE__ */ We(Re, [["__scopeId", "data-v-28a8338d"]]), Oe = "agentation-annotations-", ue = "agentation-settings", Ge = 7;
+}, ae = /* @__PURE__ */ Ge(Oe, [["__scopeId", "data-v-6e7616c2"]]), qe = "agentation-annotations-", ue = "agentation-settings", Ke = 7;
 function J(e) {
-  return `${Oe}${e}`;
+  return `${qe}${e}`;
 }
 function q() {
   if (typeof window > "u") return "/";
@@ -285,7 +285,7 @@ function le(e) {
   try {
     const t = localStorage.getItem(J(e));
     if (!t) return [];
-    const n = JSON.parse(t), o = Date.now() - Ge * 24 * 60 * 60 * 1e3;
+    const n = JSON.parse(t), o = Date.now() - Ke * 24 * 60 * 60 * 1e3;
     return n.filter(
       (i) => !i.timestamp || i.timestamp > o
     );
@@ -300,14 +300,14 @@ function K(e, t) {
     } catch {
     }
 }
-function qe(e) {
+function Ye(e) {
   if (!(typeof window > "u"))
     try {
       localStorage.removeItem(J(e));
     } catch {
     }
 }
-function $t() {
+function At() {
   if (typeof window > "u") return null;
   try {
     const e = localStorage.getItem(ue);
@@ -316,14 +316,14 @@ function $t() {
     return null;
   }
 }
-function Ct(e) {
+function St(e) {
   if (!(typeof window > "u"))
     try {
       localStorage.setItem(ue, JSON.stringify(e));
     } catch {
     }
 }
-function Ke() {
+function Ue() {
   if (typeof window > "u") return null;
   try {
     const e = localStorage.getItem("agentation-theme");
@@ -340,7 +340,7 @@ function se(e) {
     }
 }
 let R = null;
-function Ye() {
+function Ze() {
   const e = $([]), t = $(null), n = $(null), o = $("");
   function i(a) {
     o.value = a, e.value = le(a);
@@ -348,12 +348,12 @@ function Ye() {
   function u(a) {
     o.value = a, e.value = le(a), t.value = null, n.value = null;
   }
-  function p(a, f) {
+  function p(a, m) {
     const w = {
       id: crypto.randomUUID(),
       x: a.x,
       y: a.y,
-      comment: f,
+      comment: m,
       element: a.element,
       elementPath: a.elementPath,
       timestamp: Date.now(),
@@ -370,13 +370,13 @@ function Ye() {
     return e.value = [...e.value, w], K(o.value, e.value), t.value = null, w;
   }
   function x(a) {
-    const f = e.value.find((w) => w.id === a);
-    return f ? (e.value = e.value.filter((w) => w.id !== a), K(o.value, e.value), f) : null;
+    const m = e.value.find((w) => w.id === a);
+    return m ? (e.value = e.value.filter((w) => w.id !== a), K(o.value, e.value), m) : null;
   }
-  function h(a, f) {
+  function h(a, m) {
     const w = e.value.findIndex((T) => T.id === a);
     if (w === -1) return null;
-    const S = { ...e.value[w], comment: f };
+    const S = { ...e.value[w], comment: m };
     return e.value = [
       ...e.value.slice(0, w),
       S,
@@ -384,7 +384,7 @@ function Ye() {
     ], K(o.value, e.value), n.value = null, S;
   }
   function E() {
-    e.value = [], qe(o.value);
+    e.value = [], Ye(o.value);
   }
   function r(a) {
     t.value = a;
@@ -393,10 +393,10 @@ function Ye() {
     n.value = a;
   }
   function A(a) {
-    return e.value.find((f) => f.id === a);
+    return e.value.find((m) => m.id === a);
   }
   function b(a) {
-    return e.value.findIndex((f) => f.id === a);
+    return e.value.findIndex((m) => m.id === a);
   }
   const v = D(() => e.value.length), g = D(() => e.value.length === 0);
   return {
@@ -417,13 +417,13 @@ function Ye() {
     getIndex: b
   };
 }
-function Ue() {
-  return R || (R = Ye()), R;
+function Je() {
+  return R || (R = Ze()), R;
 }
-function At() {
+function Et() {
   R = null;
 }
-function Ze(e, t = 3) {
+function Xe(e, t = 3) {
   const n = [];
   let o = e, i = 0;
   for (; o && o !== document.body && i < t; ) {
@@ -440,7 +440,7 @@ function Ze(e, t = 3) {
   }
   return n.join(" > ");
 }
-function Je(e) {
+function Qe(e) {
   const t = [];
   let n = e;
   for (; n && n !== document.documentElement; ) {
@@ -465,7 +465,7 @@ function Je(e) {
 }
 function re(e) {
   var o, i, u, p, x, h, E;
-  const t = Ze(e), n = e.tagName.toLowerCase();
+  const t = Xe(e), n = e.tagName.toLowerCase();
   if (e instanceof SVGElement || e.closest("svg")) {
     const r = e.closest("svg"), c = (o = r == null ? void 0 : r.querySelector("title")) == null ? void 0 : o.textContent, A = r == null ? void 0 : r.getAttribute("aria-label");
     return {
@@ -518,7 +518,7 @@ function re(e) {
     path: t
   };
 }
-function St(e) {
+function _t(e) {
   var o;
   const t = e.tagName.toLowerCase();
   if (e instanceof SVGElement || e.closest("svg"))
@@ -528,7 +528,7 @@ function St(e) {
   const n = ((o = e.className) == null ? void 0 : o.toString()) || "";
   return n.includes("spinner") || n.includes("loader") || n.includes("loading") ? "spinner" : t;
 }
-function Xe(e) {
+function et(e) {
   var u, p, x;
   const t = [], n = e.previousElementSibling;
   if (n) {
@@ -544,7 +544,7 @@ function Xe(e) {
   }
   return t.join(" | ");
 }
-function Qe(e) {
+function tt(e) {
   const t = [], n = e.parentElement;
   n && n !== document.body && t.push(`parent: ${n.tagName.toLowerCase()}`);
   const o = e.previousElementSibling;
@@ -554,10 +554,10 @@ function Qe(e) {
   const u = e.children.length;
   return u > 0 && t.push(`children: ${u}`), t.join(", ");
 }
-function et(e) {
+function nt(e) {
   return !e.classList || e.classList.length === 0 ? "" : Array.from(e.classList).filter((t) => !(t.match(/^_[a-zA-Z0-9]+$/) || t.match(/[A-Za-z]+_[a-z0-9]{5,}$/))).join(" ");
 }
-function tt(e) {
+function ot(e) {
   const t = window.getComputedStyle(e), n = e.tagName.toLowerCase(), o = [];
   return o.push(`display: ${t.display}`), o.push(`position: ${t.position}`), ["p", "span", "h1", "h2", "h3", "h4", "h5", "h6", "a", "button"].includes(
     n
@@ -565,7 +565,7 @@ function tt(e) {
     n
   ) && (o.push(`width: ${t.width}`), o.push(`height: ${t.height}`), o.push(`padding: ${t.padding}`), o.push(`margin: ${t.margin}`), (t.display === "flex" || t.display === "inline-flex") && (o.push(`flex-direction: ${t.flexDirection}`), o.push(`justify-content: ${t.justifyContent}`), o.push(`align-items: ${t.alignItems}`), o.push(`gap: ${t.gap}`)), (t.display === "grid" || t.display === "inline-grid") && (o.push(`grid-template-columns: ${t.gridTemplateColumns}`), o.push(`grid-template-rows: ${t.gridTemplateRows}`), o.push(`gap: ${t.gap}`))), t.backgroundColor !== "rgba(0, 0, 0, 0)" && o.push(`background-color: ${t.backgroundColor}`), t.borderWidth !== "0px" && o.push(`border: ${t.border}`), t.borderRadius !== "0px" && o.push(`border-radius: ${t.borderRadius}`), o.join("; ");
 }
-function Et(e) {
+function Tt(e) {
   const t = window.getComputedStyle(e);
   return [
     "display",
@@ -609,7 +609,7 @@ function Et(e) {
     return i && i !== "none" && i !== "normal" && i !== "auto" ? `${o}: ${i}` : null;
   }).filter(Boolean).join("; ");
 }
-function nt(e) {
+function it(e) {
   const t = [], n = e.getAttribute("role");
   n && t.push(`role="${n}"`);
   const o = Array.from(e.attributes).filter((p) => p.name.startsWith("aria-")).map((p) => `${p.name}="${p.value}"`).join(" ");
@@ -617,7 +617,7 @@ function nt(e) {
   const i = e.getAttribute("tabindex");
   return i !== null && t.push(`tabindex="${i}"`), ["a", "button", "input", "textarea", "select"].includes(e.tagName.toLowerCase()) && t.push("focusable"), t.join(" ");
 }
-function ot(e) {
+function at(e) {
   let t = e;
   for (; t && t !== document.body; ) {
     const n = window.getComputedStyle(t).position;
@@ -627,7 +627,7 @@ function ot(e) {
   }
   return !1;
 }
-function it(e) {
+function lt(e) {
   const t = $(!1), n = $(null), o = $(null), i = $(null), u = "[data-agentation-ignore]";
   function p(b) {
     return !!(b.closest(u) || b === document.body || b === document.documentElement);
@@ -641,13 +641,13 @@ function it(e) {
     }
     if (v !== n.value) {
       n.value = v;
-      const f = v.getBoundingClientRect();
-      o.value = f;
+      const m = v.getBoundingClientRect();
+      o.value = m;
       const { name: w, path: S } = re(v), T = {
         element: v,
         name: w,
         path: S,
-        rect: f
+        rect: m
       };
       i.value = T, (a = e.onHoverChange) == null || a.call(e, T);
     }
@@ -657,23 +657,23 @@ function it(e) {
     const v = b.target;
     if (p(v))
       return;
-    const { name: g, path: a } = re(v), f = v.getBoundingClientRect(), w = window.innerWidth, S = window.scrollY, T = ot(v), F = {
-      x: (f.left + f.width / 2) / w * 100,
-      y: T ? f.top + f.height / 2 : f.top + f.height / 2 + S,
+    const { name: g, path: a } = re(v), m = v.getBoundingClientRect(), w = window.innerWidth, S = window.scrollY, T = at(v), F = {
+      x: (m.left + m.width / 2) / w * 100,
+      y: T ? m.top + m.height / 2 : m.top + m.height / 2 + S,
       element: g,
       elementPath: a,
       boundingBox: {
-        x: f.left,
-        y: f.top,
-        width: f.width,
-        height: f.height
+        x: m.left,
+        y: m.top,
+        width: m.width,
+        height: m.height
       },
-      nearbyText: Xe(v),
-      nearbyElements: Qe(v),
-      cssClasses: et(v),
-      computedStyles: tt(v),
-      fullPath: Je(v),
-      accessibility: nt(v),
+      nearbyText: et(v),
+      nearbyElements: tt(v),
+      cssClasses: nt(v),
+      computedStyles: ot(v),
+      fullPath: Qe(v),
+      accessibility: it(v),
       isFixed: T
     };
     c(), e.onSelect(F, v);
@@ -693,7 +693,7 @@ function it(e) {
   function A() {
     t.value ? c() : r();
   }
-  return W(() => {
+  return V(() => {
     t.value && c();
   }), {
     isActive: B(t),
@@ -705,12 +705,12 @@ function it(e) {
     toggle: A
   };
 }
-const at = "agentation-animation-freeze", Y = "--agentation-animation-state";
-function lt() {
+const st = "agentation-animation-freeze", Y = "--agentation-animation-state";
+function rt() {
   const e = $(!1);
   let t = null;
   function n() {
-    e.value || (document.documentElement.style.setProperty(Y, "paused"), t || (t = document.createElement("style"), t.id = at, t.textContent = `
+    e.value || (document.documentElement.style.setProperty(Y, "paused"), t || (t = document.createElement("style"), t.id = st, t.textContent = `
         *,
         *::before,
         *::after {
@@ -729,7 +729,7 @@ function lt() {
   function i() {
     e.value ? o() : n();
   }
-  return W(() => {
+  return V(() => {
     e.value && o();
   }), {
     isPaused: B(e),
@@ -738,10 +738,10 @@ function lt() {
     toggle: i
   };
 }
-function st() {
+function ut() {
   const e = $(!1);
   function t() {
-    const i = Ke();
+    const i = Ue();
     i ? e.value = i === "dark" : typeof window < "u" && (e.value = window.matchMedia("(prefers-color-scheme: dark)").matches);
   }
   function n() {
@@ -759,7 +759,7 @@ function st() {
     initialize: t
   };
 }
-function rt(e, t = "standard") {
+function dt(e, t = "standard") {
   if (e.length === 0)
     return "No annotations to display.";
   const n = [
@@ -784,53 +784,53 @@ function rt(e, t = "standard") {
   }), n.join(`
 `);
 }
-function _t(e) {
+function Pt(e) {
   return [
     `[${e.element}]`,
     e.comment,
     `(${e.elementPath})`
   ].join(" ");
 }
-const ut = ["aria-pressed"], dt = ["aria-pressed", "title"], ct = {
+const ct = ["aria-pressed"], ft = ["aria-pressed", "title"], mt = {
   key: 0,
   class: "agentation-toolbar__icon",
   fill: "currentColor",
   viewBox: "0 0 24 24"
-}, ft = {
+}, pt = {
   key: 1,
   class: "agentation-toolbar__icon",
   fill: "currentColor",
   viewBox: "0 0 24 24"
-}, mt = ["disabled", "title"], pt = {
+}, gt = ["disabled", "title"], ht = {
   key: 0,
   class: "agentation-toolbar__icon",
   fill: "none",
   stroke: "currentColor",
   viewBox: "0 0 24 24"
-}, gt = {
+}, vt = {
   key: 1,
   class: "agentation-toolbar__icon",
   fill: "none",
   stroke: "currentColor",
   viewBox: "0 0 24 24"
-}, ht = {
+}, yt = {
   key: 2,
   class: "agentation-toolbar__badge"
-}, vt = ["disabled"], yt = ["title"], bt = {
+}, bt = ["disabled"], xt = ["title"], wt = {
   key: 0,
   class: "agentation-toolbar__icon",
   fill: "currentColor",
   viewBox: "0 0 24 24"
-}, xt = {
+}, kt = {
   key: 1,
   class: "agentation-toolbar__icon",
   fill: "none",
   stroke: "currentColor",
   viewBox: "0 0 24 24"
-}, wt = {
+}, $t = {
   style: { position: "absolute", inset: "0", "z-index": "99998", "pointer-events": "none" },
   "data-agentation-ignore": ""
-}, U = "#3b82f6", Tt = /* @__PURE__ */ Z({
+}, U = "#3b82f6", Lt = /* @__PURE__ */ Z({
   __name: "Agentation",
   props: {
     demoAnnotations: {},
@@ -855,20 +855,23 @@ const ut = ["aria-pressed"], dt = ["aria-pressed", "title"], ct = {
       remove: h,
       clear: E,
       setPending: r
-    } = Ue(), { isPaused: c, toggle: A } = lt(), { isDark: b, toggle: v } = st(), g = $(!1), a = $(null), f = $(!1), w = D(() => n.value ? n.value.x / 100 * (typeof window < "u" ? window.innerWidth : 0) : 0), S = D(() => {
+    } = Je(), { isPaused: c, toggle: A } = rt(), { isDark: b, toggle: v } = ut(), g = $(!1), a = $(null), m = $(!1), w = D(() => n.value ? n.value.x / 100 * (typeof window < "u" ? window.innerWidth : 0) : 0), S = D(() => {
       if (!n.value) return 0;
       const y = typeof window < "u" ? window.scrollY : 0;
       return n.value.isFixed ? n.value.y : n.value.y - y;
     }), T = D(() => {
-      if (!I.value) return { showBelow: !1, showLeft: !1 };
-      const y = 32, s = 8, m = typeof window < "u" ? window.innerWidth : 1e3, P = I.value.top < y + s, G = I.value.left > m - 200;
-      return { showBelow: P, showLeft: G };
+      if (!P.value) return { vertical: "top", horizontal: "left" };
+      const y = 32, s = 150, f = 8, L = typeof window < "u" ? window.innerWidth : 1e3, G = P.value.top < y + f, ge = P.value.left + s > L - f, he = P.value.left + P.value.width < s + f;
+      return {
+        vertical: G ? "bottom" : "top",
+        horizontal: ge && !he ? "right" : "left"
+      };
     }), {
       isActive: F,
-      highlightBox: I,
+      highlightBox: P,
       elementInfo: X,
       toggle: Q
-    } = it({
+    } = lt({
       onSelect: (y) => {
         r(y), g.value = !0;
       },
@@ -888,37 +891,37 @@ const ut = ["aria-pressed"], dt = ["aria-pressed", "title"], ct = {
       if (typeof window < "u") {
         const s = q();
         O.value = s, u(s), z = requestAnimationFrame(ee), e.enableDemoMode && ((y = e.demoAnnotations) != null && y.length) && setTimeout(() => {
-          e.demoAnnotations.forEach((m, P) => {
+          e.demoAnnotations.forEach((f, L) => {
             setTimeout(() => {
               x(
                 {
-                  x: m.x,
-                  y: m.y,
-                  element: m.element,
-                  elementPath: m.elementPath
+                  x: f.x,
+                  y: f.y,
+                  element: f.element,
+                  elementPath: f.elementPath
                 },
-                `Demo annotation ${P + 1}`
+                `Demo annotation ${L + 1}`
               );
-            }, P * 300);
+            }, L * 300);
           });
         }, e.demoDelay);
       }
-    }), W(() => {
+    }), V(() => {
       z !== null && (cancelAnimationFrame(z), z = null);
     });
     function ce(y) {
-      var m;
+      var f;
       if (!n.value) return;
       const s = x(n.value, y);
-      g.value = !1, (m = e.onAnnotationAdd) == null || m.call(e, s);
+      g.value = !1, (f = e.onAnnotationAdd) == null || f.call(e, s);
     }
     function fe() {
       g.value = !1, r(null);
     }
     function te(y) {
-      var m;
+      var f;
       const s = h(y.id);
-      s && ((m = e.onAnnotationDelete) == null || m.call(e, s));
+      s && ((f = e.onAnnotationDelete) == null || f.call(e, s));
     }
     function me() {
       var y;
@@ -926,11 +929,11 @@ const ut = ["aria-pressed"], dt = ["aria-pressed", "title"], ct = {
     }
     async function pe() {
       var s;
-      const y = rt([...t.value]);
+      const y = dt([...t.value]);
       if (e.copyToClipboard)
         try {
-          await navigator.clipboard.writeText(y), f.value = !0, setTimeout(() => {
-            f.value = !1;
+          await navigator.clipboard.writeText(y), m.value = !0, setTimeout(() => {
+            m.value = !1;
           }, 2e3);
         } catch {
           console.log(y);
@@ -940,20 +943,20 @@ const ut = ["aria-pressed"], dt = ["aria-pressed", "title"], ct = {
     function ne(y) {
       console.log("Marker clicked:", y);
     }
-    return (y, s) => (k(), H(ke, { to: "body" }, [
+    return (y, s) => (k(), H(Ce, { to: "body" }, [
       l("div", {
-        class: L(["agentation-toolbar", d(b) ? "agentation-toolbar--dark" : ""]),
+        class: M(["agentation-toolbar", d(b) ? "agentation-toolbar--dark" : ""]),
         "data-agentation-ignore": "",
         role: "toolbar",
         "aria-label": "Agentation annotation tools"
       }, [
         l("button", {
           type: "button",
-          class: L(["agentation-toolbar__button", d(F) && "agentation-toolbar__button--active"]),
+          class: M(["agentation-toolbar__button", d(F) && "agentation-toolbar__button--active"]),
           "aria-pressed": d(F),
           title: "Select element to annotate",
           onClick: s[0] || (s[0] = //@ts-ignore
-          (...m) => d(Q) && d(Q)(...m))
+          (...f) => d(Q) && d(Q)(...f))
         }, [...s[5] || (s[5] = [
           l("svg", {
             class: "agentation-toolbar__icon",
@@ -962,37 +965,37 @@ const ut = ["aria-pressed"], dt = ["aria-pressed", "title"], ct = {
           }, [
             l("path", { d: "M4 4l7.07 17 2.51-7.39L21 11.07 4 4zm9.33 8.33l-1.62 4.79L6.27 6.27l10.85 5.06-3.79 1z" })
           ], -1)
-        ])], 10, ut),
+        ])], 10, ct),
         l("button", {
           type: "button",
-          class: L(["agentation-toolbar__button", d(c) && "agentation-toolbar__button--paused"]),
+          class: M(["agentation-toolbar__button", d(c) && "agentation-toolbar__button--paused"]),
           "aria-pressed": d(c),
           title: d(c) ? "Resume animations" : "Pause animations",
           onClick: s[1] || (s[1] = //@ts-ignore
-          (...m) => d(A) && d(A)(...m))
+          (...f) => d(A) && d(A)(...f))
         }, [
-          d(c) ? (k(), C("svg", ct, [...s[6] || (s[6] = [
+          d(c) ? (k(), C("svg", mt, [...s[6] || (s[6] = [
             l("path", { d: "M8 5v14l11-7z" }, null, -1)
-          ])])) : (k(), C("svg", ft, [...s[7] || (s[7] = [
+          ])])) : (k(), C("svg", pt, [...s[7] || (s[7] = [
             l("path", { d: "M6 4h4v16H6V4zm8 0h4v16h-4V4z" }, null, -1)
           ])]))
-        ], 10, dt),
+        ], 10, ft),
         s[13] || (s[13] = l("div", { class: "agentation-toolbar__divider" }, null, -1)),
         l("button", {
           type: "button",
-          class: L(["agentation-toolbar__button", f.value && "agentation-toolbar__button--success"]),
+          class: M(["agentation-toolbar__button", m.value && "agentation-toolbar__button--success"]),
           disabled: d(i),
           title: `Copy ${d(o)} annotation(s) as markdown`,
           onClick: pe
         }, [
-          f.value ? (k(), C("svg", pt, [...s[8] || (s[8] = [
+          m.value ? (k(), C("svg", ht, [...s[8] || (s[8] = [
             l("path", {
               "stroke-linecap": "round",
               "stroke-linejoin": "round",
               "stroke-width": "2",
               d: "M5 13l4 4L19 7"
             }, null, -1)
-          ])])) : (k(), C("svg", gt, [...s[9] || (s[9] = [
+          ])])) : (k(), C("svg", vt, [...s[9] || (s[9] = [
             l("path", {
               "stroke-linecap": "round",
               "stroke-linejoin": "round",
@@ -1000,8 +1003,8 @@ const ut = ["aria-pressed"], dt = ["aria-pressed", "title"], ct = {
               d: "M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
             }, null, -1)
           ])])),
-          d(o) > 0 ? (k(), C("span", ht, _(d(o)), 1)) : M("", !0)
-        ], 10, mt),
+          d(o) > 0 ? (k(), C("span", yt, _(d(o)), 1)) : I("", !0)
+        ], 10, gt),
         l("button", {
           type: "button",
           class: "agentation-toolbar__button",
@@ -1022,18 +1025,18 @@ const ut = ["aria-pressed"], dt = ["aria-pressed", "title"], ct = {
               d: "M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
             })
           ], -1)
-        ])], 8, vt),
+        ])], 8, bt),
         s[14] || (s[14] = l("div", { class: "agentation-toolbar__divider" }, null, -1)),
         l("button", {
           type: "button",
           class: "agentation-toolbar__button",
           title: d(b) ? "Switch to light mode" : "Switch to dark mode",
           onClick: s[2] || (s[2] = //@ts-ignore
-          (...m) => d(v) && d(v)(...m))
+          (...f) => d(v) && d(v)(...f))
         }, [
-          d(b) ? (k(), C("svg", bt, [...s[11] || (s[11] = [
+          d(b) ? (k(), C("svg", wt, [...s[11] || (s[11] = [
             l("path", { d: "M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 01-4.4 2.26 5.403 5.403 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z" }, null, -1)
-          ])])) : (k(), C("svg", xt, [...s[12] || (s[12] = [
+          ])])) : (k(), C("svg", kt, [...s[12] || (s[12] = [
             l("path", {
               "stroke-linecap": "round",
               "stroke-linejoin": "round",
@@ -1041,55 +1044,52 @@ const ut = ["aria-pressed"], dt = ["aria-pressed", "title"], ct = {
               d: "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
             }, null, -1)
           ])]))
-        ], 8, yt)
+        ], 8, xt)
       ], 2),
-      d(F) && d(I) ? (k(), C("div", {
+      d(F) && d(P) ? (k(), C("div", {
         key: 0,
         class: "agentation-highlight",
         style: N({
-          left: `${d(I).left}px`,
-          top: `${d(I).top}px`,
-          width: `${d(I).width}px`,
-          height: `${d(I).height}px`
+          left: `${d(P).left}px`,
+          top: `${d(P).top}px`,
+          width: `${d(P).width}px`,
+          height: `${d(P).height}px`
         }),
         "data-agentation-ignore": ""
       }, [
         d(X) ? (k(), C("div", {
           key: 0,
-          class: L(["agentation-highlight__tooltip", [
-            T.value.showBelow ? "agentation-highlight__tooltip--bottom" : "agentation-highlight__tooltip--top",
-            T.value.showLeft ? "agentation-highlight__tooltip--top-right" : ""
-          ]])
-        }, _(d(X).name), 3)) : M("", !0)
-      ], 4)) : M("", !0),
-      l("div", wt, [
-        (k(!0), C(oe, null, ie(d(t).filter((m) => !m.isFixed), (m, P) => (k(), H(ae, {
-          key: m.id,
-          annotation: m,
-          index: P,
+          class: M(["agentation-highlight__tooltip", `agentation-highlight__tooltip--${T.value.vertical}-${T.value.horizontal}`])
+        }, _(d(X).name), 3)) : I("", !0)
+      ], 4)) : I("", !0),
+      l("div", $t, [
+        (k(!0), C(oe, null, ie(d(t).filter((f) => !f.isFixed), (f, L) => (k(), H(ae, {
+          key: f.id,
+          annotation: f,
+          index: L,
           dark: d(b),
           "accent-color": U,
-          "is-hovered": a.value === m.id,
+          "is-hovered": a.value === f.id,
           style: { "pointer-events": "auto" },
           onClick: ne,
           onDelete: te,
-          onMouseenter: (G) => a.value = m.id,
+          onMouseenter: (G) => a.value = f.id,
           onMouseleave: s[3] || (s[3] = (G) => a.value = null)
         }, null, 8, ["annotation", "index", "dark", "is-hovered", "onMouseenter"]))), 128))
       ]),
-      (k(!0), C(oe, null, ie(d(t).filter((m) => m.isFixed), (m) => (k(), H(ae, {
-        key: m.id,
-        annotation: m,
-        index: d(t).findIndex((P) => P.id === m.id),
+      (k(!0), C(oe, null, ie(d(t).filter((f) => f.isFixed), (f) => (k(), H(ae, {
+        key: f.id,
+        annotation: f,
+        index: d(t).findIndex((L) => L.id === f.id),
         dark: d(b),
         "accent-color": U,
-        "is-hovered": a.value === m.id,
+        "is-hovered": a.value === f.id,
         onClick: ne,
         onDelete: te,
-        onMouseenter: (P) => a.value = m.id,
-        onMouseleave: s[4] || (s[4] = (P) => a.value = null)
+        onMouseenter: (L) => a.value = f.id,
+        onMouseleave: s[4] || (s[4] = (L) => a.value = null)
       }, null, 8, ["annotation", "index", "dark", "is-hovered", "onMouseenter"]))), 128)),
-      g.value && d(n) ? (k(), H(Be, {
+      g.value && d(n) ? (k(), H(De, {
         key: 1,
         element: d(n).element,
         x: w.value,
@@ -1100,39 +1100,39 @@ const ut = ["aria-pressed"], dt = ["aria-pressed", "title"], ct = {
         "accent-color": U,
         onSubmit: ce,
         onCancel: fe
-      }, null, 8, ["element", "x", "y", "selected-text", "computed-styles", "dark"])) : M("", !0)
+      }, null, 8, ["element", "x", "y", "selected-text", "computed-styles", "dark"])) : I("", !0)
     ]));
   }
 });
 export {
-  Tt as Agentation,
+  Lt as Agentation,
   ae as AnnotationMarker,
-  Be as AnnotationPopup,
-  qe as clearAnnotations,
-  _t as generateAnnotationSummary,
-  rt as generateMarkdown,
-  nt as getAccessibilityInfo,
+  De as AnnotationPopup,
+  Ye as clearAnnotations,
+  Pt as generateAnnotationSummary,
+  dt as generateMarkdown,
+  it as getAccessibilityInfo,
   q as getCurrentRoutePath,
-  tt as getDetailedComputedStyles,
-  et as getElementClasses,
-  Ze as getElementPath,
-  Et as getForensicComputedStyles,
-  Je as getFullElementPath,
-  Qe as getNearbyElements,
-  Xe as getNearbyText,
+  ot as getDetailedComputedStyles,
+  nt as getElementClasses,
+  Xe as getElementPath,
+  Tt as getForensicComputedStyles,
+  Qe as getFullElementPath,
+  tt as getNearbyElements,
+  et as getNearbyText,
   J as getStorageKey,
-  St as identifyAnimationElement,
+  _t as identifyAnimationElement,
   re as identifyElement,
-  ot as isElementFixed,
+  at as isElementFixed,
   le as loadAnnotations,
-  $t as loadSettings,
-  Ke as loadTheme,
-  At as resetAnnotations,
+  At as loadSettings,
+  Ue as loadTheme,
+  Et as resetAnnotations,
   K as saveAnnotations,
-  Ct as saveSettings,
+  St as saveSettings,
   se as saveTheme,
-  lt as useAnimationPause,
-  Ue as useAnnotations,
-  it as useElementSelection,
-  st as useTheme
+  rt as useAnimationPause,
+  Je as useAnnotations,
+  lt as useElementSelection,
+  ut as useTheme
 };
