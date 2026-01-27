@@ -112,17 +112,49 @@ export function identifyElement(target: Element): {
     return { name: `Link: "${text}"`, path };
   }
 
-  // Inputs
+  // Form elements (input, textarea, select)
   if (tag === "input" || tag === "textarea" || tag === "select") {
-    const inputType = (target as HTMLInputElement).type || tag;
-    const label =
-      target.getAttribute("aria-label") ||
-      target.getAttribute("placeholder") ||
-      document.querySelector(`label[for="${target.id}"]`)?.textContent?.trim();
-    return {
-      name: label ? `${inputType}: "${label}"` : `${inputType} field`,
-      path,
-    };
+    // Priority 1: Use ID if present (e.g., input#email, select#country)
+    if (target.id) {
+      return { name: `${tag}#${target.id}`, path };
+    }
+
+    // Priority 2: Use significant class if present (e.g., input.form-control, select.form-select)
+    if (target.classList.length > 0) {
+      const significantClasses = Array.from(target.classList).filter((c) => {
+        if (c.match(/^_[a-zA-Z0-9]+$/)) return false;
+        if (c.match(/[A-Za-z]+_[a-z0-9]{5,}$/)) return false;
+        return true;
+      });
+      if (significantClasses.length > 0) {
+        const classesStr = significantClasses.slice(0, 2).join('.');
+        return { name: `${tag}.${classesStr}`, path };
+      }
+    }
+
+    // Priority 3: Use label or aria-label for context
+    const labelElement = target.id 
+      ? document.querySelector(`label[for="${target.id}"]`) 
+      : null;
+    const labelText = labelElement?.textContent?.trim();
+    const ariaLabel = target.getAttribute("aria-label");
+    const placeholder = target.getAttribute("placeholder");
+    const name = target.getAttribute("name");
+
+    // Build a descriptive name with type info
+    const inputType = tag === "select" 
+      ? "select" 
+      : tag === "textarea" 
+        ? "textarea" 
+        : (target as HTMLInputElement).type || "text";
+    
+    const descriptor = labelText || ariaLabel || placeholder || name;
+    if (descriptor) {
+      return { name: `${tag}[${inputType}]: "${descriptor.slice(0, 30)}"`, path };
+    }
+
+    // Priority 4: Just show tag with type (e.g., "input[text]", "select")
+    return { name: tag === "input" ? `${tag}[${inputType}]` : tag, path };
   }
 
   // Headings
@@ -147,9 +179,162 @@ export function identifyElement(target: Element): {
     return { name: alt ? `Image: "${alt}"` : "Image", path };
   }
 
-  // Lists
+  // Labels (form companion)
+  if (tag === "label") {
+    const forAttr = target.getAttribute("for");
+    const text = target.textContent?.trim().slice(0, 30);
+    if (forAttr) {
+      return { name: `Label[for="${forAttr}"]: "${text || ""}"`, path };
+    }
+    return { name: text ? `Label: "${text}"` : "Label", path };
+  }
+
+  // Tables
+  if (tag === "table") {
+    const caption = target.querySelector("caption")?.textContent?.trim().slice(0, 30);
+    const ariaLabel = target.getAttribute("aria-label");
+    return { name: caption || ariaLabel ? `Table: "${caption || ariaLabel}"` : "Table", path };
+  }
+  if (tag === "thead") return { name: "Table header", path };
+  if (tag === "tbody") return { name: "Table body", path };
+  if (tag === "tfoot") return { name: "Table footer", path };
+  if (tag === "tr") {
+    const rowIndex = (target as HTMLTableRowElement).rowIndex;
+    return { name: `Table row ${rowIndex >= 0 ? `#${rowIndex + 1}` : ""}`, path };
+  }
+  if (tag === "th") {
+    const text = target.textContent?.trim().slice(0, 25);
+    return { name: text ? `Table header: "${text}"` : "Table header cell", path };
+  }
+  if (tag === "td") {
+    const text = target.textContent?.trim().slice(0, 25);
+    return { name: text ? `Table cell: "${text}"` : "Table cell", path };
+  }
+
+  // Forms
+  if (tag === "form") {
+    const name = target.getAttribute("name") || target.getAttribute("id");
+    const action = target.getAttribute("action");
+    if (name) return { name: `Form: "${name}"`, path };
+    if (action) return { name: `Form → ${action.slice(0, 30)}`, path };
+    return { name: "Form", path };
+  }
+
+  // Fieldset/Legend (form grouping)
+  if (tag === "fieldset") {
+    const legend = target.querySelector("legend")?.textContent?.trim().slice(0, 30);
+    return { name: legend ? `Fieldset: "${legend}"` : "Fieldset", path };
+  }
+  if (tag === "legend") {
+    const text = target.textContent?.trim().slice(0, 30);
+    return { name: text ? `Legend: "${text}"` : "Legend", path };
+  }
+
+  // Video/Audio
+  if (tag === "video") {
+    const src = (target as HTMLVideoElement).src || target.querySelector("source")?.src;
+    return { name: src ? `Video: ${src.split("/").pop()?.slice(0, 25) || "video"}` : "Video", path };
+  }
+  if (tag === "audio") {
+    const src = (target as HTMLAudioElement).src || target.querySelector("source")?.src;
+    return { name: src ? `Audio: ${src.split("/").pop()?.slice(0, 25) || "audio"}` : "Audio", path };
+  }
+
+  // Iframe
+  if (tag === "iframe") {
+    const title = target.getAttribute("title");
+    const src = (target as HTMLIFrameElement).src;
+    if (title) return { name: `Iframe: "${title}"`, path };
+    if (src) {
+      try {
+        const hostname = new URL(src).hostname;
+        return { name: `Iframe: ${hostname}`, path };
+      } catch {
+        return { name: "Iframe", path };
+      }
+    }
+    return { name: "Iframe", path };
+  }
+
+  // Code blocks
+  if (tag === "code") {
+    const parent = target.parentElement;
+    const isBlock = parent?.tagName.toLowerCase() === "pre";
+    const text = target.textContent?.trim().slice(0, 30);
+    return { name: isBlock ? "Code block" : (text ? `Code: "${text}"` : "Inline code"), path };
+  }
+  if (tag === "pre") {
+    const hasCode = target.querySelector("code");
+    return { name: hasCode ? "Code block" : "Preformatted text", path };
+  }
+
+  // Dialog/Modal
+  if (tag === "dialog") {
+    const ariaLabel = target.getAttribute("aria-label") || target.getAttribute("aria-labelledby");
+    const isOpen = (target as HTMLDialogElement).open;
+    const stateStr = isOpen ? " (open)" : "";
+    return { name: ariaLabel ? `Dialog: "${ariaLabel}"${stateStr}` : `Dialog${stateStr}`, path };
+  }
+
+  // Progress/Meter
+  if (tag === "progress") {
+    const value = (target as HTMLProgressElement).value;
+    const max = (target as HTMLProgressElement).max;
+    return { name: `Progress: ${Math.round((value / max) * 100)}%`, path };
+  }
+  if (tag === "meter") {
+    const value = (target as HTMLMeterElement).value;
+    return { name: `Meter: ${value}`, path };
+  }
+
+  // Canvas
+  if (tag === "canvas") {
+    const ariaLabel = target.getAttribute("aria-label");
+    return { name: ariaLabel ? `Canvas: "${ariaLabel}"` : "Canvas", path };
+  }
+
+  // Figure/Figcaption
+  if (tag === "figure") {
+    const caption = target.querySelector("figcaption")?.textContent?.trim().slice(0, 30);
+    return { name: caption ? `Figure: "${caption}"` : "Figure", path };
+  }
+  if (tag === "figcaption") {
+    const text = target.textContent?.trim().slice(0, 30);
+    return { name: text ? `Caption: "${text}"` : "Figure caption", path };
+  }
+
+  // Blockquote/Cite
+  if (tag === "blockquote") {
+    const cite = target.getAttribute("cite");
+    const text = target.textContent?.trim().slice(0, 30);
+    if (cite) return { name: `Blockquote from ${cite}`, path };
+    return { name: text ? `Blockquote: "${text}..."` : "Blockquote", path };
+  }
+
+  // Lists (ul, ol, li)
+  if (tag === "ul") {
+    const itemCount = target.querySelectorAll(":scope > li").length;
+    return { name: `Unordered list (${itemCount} items)`, path };
+  }
+  if (tag === "ol") {
+    const itemCount = target.querySelectorAll(":scope > li").length;
+    const start = (target as HTMLOListElement).start || 1;
+    return { name: `Ordered list (${itemCount} items, starts at ${start})`, path };
+  }
   if (tag === "li") {
-    return { name: "List item", path };
+    const text = target.textContent?.trim().slice(0, 25);
+    return { name: text ? `List item: "${text}"` : "List item", path };
+  }
+  if (tag === "dl") {
+    return { name: "Definition list", path };
+  }
+  if (tag === "dt") {
+    const text = target.textContent?.trim().slice(0, 25);
+    return { name: text ? `Term: "${text}"` : "Definition term", path };
+  }
+  if (tag === "dd") {
+    const text = target.textContent?.trim().slice(0, 25);
+    return { name: text ? `Definition: "${text}"` : "Definition", path };
   }
 
   // Check for significant class for any element not caught above
