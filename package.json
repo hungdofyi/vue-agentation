@@ -1,6 +1,6 @@
 {
   "name": "vue-agentation",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Vue 3 port of Agentation - A visual feedback tool for AI agents",
   "keywords": [
     "vue",
