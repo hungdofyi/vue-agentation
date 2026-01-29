@@ -31,11 +31,17 @@ export interface SelectionCallbacks {
   onHoverChange?: (info: ElementInfo | null) => void;
 }
 
+export interface CursorPosition {
+  x: number;
+  y: number;
+}
+
 export interface UseElementSelectionReturn {
   isActive: Readonly<import("vue").Ref<boolean>>;
   hoveredElement: Readonly<import("vue").Ref<HTMLElement | null>>;
   highlightBox: Readonly<import("vue").Ref<DOMRect | null>>;
   elementInfo: Readonly<import("vue").Ref<ElementInfo | null>>;
+  cursorPosition: Readonly<import("vue").Ref<CursorPosition | null>>;
   start: () => void;
   stop: () => void;
   toggle: () => void;
@@ -46,6 +52,7 @@ export function useElementSelection(callbacks: SelectionCallbacks): UseElementSe
   const hoveredElement = ref<HTMLElement | null>(null);
   const highlightBox = ref<DOMRect | null>(null);
   const elementInfo = ref<ElementInfo | null>(null);
+  const cursorPosition = ref<CursorPosition | null>(null);
 
   // Elements to ignore during selection
   const ignoreSelector = "[data-agentation-ignore]";
@@ -64,6 +71,9 @@ export function useElementSelection(callbacks: SelectionCallbacks): UseElementSe
 
   function handleMouseMove(event: MouseEvent) {
     const target = event.target as HTMLElement;
+
+    // Always update cursor position
+    cursorPosition.value = { x: event.clientX, y: event.clientY };
 
     if (shouldIgnoreElement(target)) {
       hoveredElement.value = null;
@@ -164,6 +174,7 @@ export function useElementSelection(callbacks: SelectionCallbacks): UseElementSe
     hoveredElement.value = null;
     highlightBox.value = null;
     elementInfo.value = null;
+    cursorPosition.value = null;
 
     document.removeEventListener("mousemove", handleMouseMove, {
       capture: true,
@@ -197,6 +208,7 @@ export function useElementSelection(callbacks: SelectionCallbacks): UseElementSe
     hoveredElement: readonly(hoveredElement) as unknown as Readonly<import("vue").Ref<HTMLElement | null>>,
     highlightBox: readonly(highlightBox),
     elementInfo: readonly(elementInfo) as unknown as Readonly<import("vue").Ref<ElementInfo | null>>,
+    cursorPosition: readonly(cursorPosition),
     start,
     stop,
     toggle,

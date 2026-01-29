@@ -9,11 +9,16 @@ export interface SelectionCallbacks {
     onSelect: (pending: PendingAnnotation, element: HTMLElement) => void;
     onHoverChange?: (info: ElementInfo | null) => void;
 }
+export interface CursorPosition {
+    x: number;
+    y: number;
+}
 export interface UseElementSelectionReturn {
     isActive: Readonly<import('vue').Ref<boolean>>;
     hoveredElement: Readonly<import('vue').Ref<HTMLElement | null>>;
     highlightBox: Readonly<import('vue').Ref<DOMRect | null>>;
     elementInfo: Readonly<import('vue').Ref<ElementInfo | null>>;
+    cursorPosition: Readonly<import('vue').Ref<CursorPosition | null>>;
     start: () => void;
     stop: () => void;
     toggle: () => void;

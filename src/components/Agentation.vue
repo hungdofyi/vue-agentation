@@ -113,33 +113,33 @@ const currentAnnotationData = computed(() => {
   return null;
 });
 
-// Tooltip position: determines optimal placement based on viewport boundaries
-const tooltipPosition = computed(() => {
-  if (!highlightBox.value) return { vertical: "top", horizontal: "left" };
+// Tooltip position: follows cursor with offset, stays within viewport
+const TOOLTIP_OFFSET = 4;
+const tooltipStyle = computed(() => {
+  if (!cursorPosition.value) return {};
 
-  const TOOLTIP_HEIGHT = 32;
-  const TOOLTIP_WIDTH_ESTIMATE = 150; // Estimated max tooltip width
-  const PADDING = 8;
   const viewportWidth =
     typeof window !== "undefined" ? window.innerWidth : 1000;
 
-  // Check vertical positioning
-  const needsBelow = highlightBox.value.top < TOOLTIP_HEIGHT + PADDING;
+  const TOOLTIP_WIDTH_ESTIMATE = 150;
+  const TOOLTIP_HEIGHT = 32;
 
-  // Check horizontal positioning - tooltip extends from left edge of highlight
-  // If the element's left + tooltip width exceeds viewport, align to right
-  const tooltipWouldOverflowRight =
-    highlightBox.value.left + TOOLTIP_WIDTH_ESTIMATE > viewportWidth - PADDING;
+  let x = cursorPosition.value.x + TOOLTIP_OFFSET;
+  let y = cursorPosition.value.y - TOOLTIP_HEIGHT - TOOLTIP_OFFSET;
 
-  // If element is near left edge and we want right alignment, check if that works
-  const tooltipWouldOverflowLeft =
-    highlightBox.value.left + highlightBox.value.width <
-    TOOLTIP_WIDTH_ESTIMATE + PADDING;
+  // Keep tooltip within viewport horizontally
+  if (x + TOOLTIP_WIDTH_ESTIMATE > viewportWidth) {
+    x = cursorPosition.value.x - TOOLTIP_WIDTH_ESTIMATE - TOOLTIP_OFFSET;
+  }
+
+  // If tooltip would go above viewport, show below cursor instead
+  if (y < 0) {
+    y = cursorPosition.value.y + TOOLTIP_OFFSET;
+  }
 
   return {
-    vertical: needsBelow ? "bottom" : "top",
-    horizontal:
-      tooltipWouldOverflowRight && !tooltipWouldOverflowLeft ? "right" : "left",
+    left: `${x}px`,
+    top: `${y}px`,
   };
 });
 
@@ -148,6 +148,7 @@ const {
   isActive: isSelecting,
   highlightBox,
   elementInfo,
+  cursorPosition,
   toggle: toggleSelection,
 } = useElementSelection({
   onSelect: (pending: PendingAnnotation) => {
@@ -440,15 +441,16 @@ function handleMarkerClick(annotation: Annotation) {
         height: `${highlightBox.height}px`,
       }"
       data-agentation-ignore
+    />
+
+    <!-- Element name tooltip (follows cursor) -->
+    <div
+      v-if="isSelecting && elementInfo && cursorPosition"
+      class="agentation-highlight__tooltip"
+      :style="tooltipStyle"
+      data-agentation-ignore
     >
-      <!-- Element name tooltip with edge detection -->
-      <div
-        v-if="elementInfo"
-        class="agentation-highlight__tooltip"
-        :class="`agentation-highlight__tooltip--${tooltipPosition.vertical}-${tooltipPosition.horizontal}`"
-      >
-        {{ elementInfo.name }}
-      </div>
+      {{ elementInfo.name }}
     </div>
 
     <!-- Annotation Markers Container (for scrolling elements) -->
