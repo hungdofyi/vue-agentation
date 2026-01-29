@@ -63,6 +63,11 @@ function createAnnotations() {
       fullPath: pending.fullPath,
       accessibility: pending.accessibility,
       isFixed: pending.isFixed,
+      // Group selection fields
+      isMultiSelect: pending.isMultiSelect,
+      elements: pending.elements,
+      groupBoundingBox: pending.groupBoundingBox,
+      totalElementCount: pending.totalElementCount,
     };
 
     annotations.value = [...annotations.value, annotation];

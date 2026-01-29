@@ -7,6 +7,7 @@
 -->
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
+import { selectionThemes } from "../types";
 
 interface Props {
   /** Element name to display in header */
@@ -27,6 +28,8 @@ interface Props {
   dark?: boolean;
   /** Computed styles to show (collapsible) */
   computedStyles?: string;
+  /** Whether this is a group/multi-select annotation */
+  isMultiSelect?: boolean;
 }
 
 const {
@@ -39,7 +42,13 @@ const {
   accentColor = "#3b82f6",
   dark = false,
   computedStyles,
+  isMultiSelect = false,
 } = defineProps<Props>();
+
+// Get the appropriate color based on selection type
+const themeColor = computed(() => {
+  return isMultiSelect ? selectionThemes.group.primary : accentColor;
+});
 
 const emit = defineEmits<{
   submit: [comment: string];
@@ -168,7 +177,8 @@ defineExpose({ shake });
       <div class="agentation-popup__header-content">
         <div
           class="agentation-popup__header-dot"
-          :style="{ backgroundColor: accentColor }"
+          :class="isMultiSelect && 'agentation-popup__header-dot--diamond'"
+          :style="{ backgroundColor: themeColor }"
         />
         <span class="agentation-popup__header-title">
           {{ element }}
@@ -238,7 +248,7 @@ defineExpose({ shake });
         <button
           type="button"
           class="agentation-popup__btn agentation-popup__btn--submit"
-          :style="{ backgroundColor: accentColor }"
+          :style="{ backgroundColor: themeColor }"
           @click="handleSubmit"
         >
           {{ submitLabel }}

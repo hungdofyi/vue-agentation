@@ -5,6 +5,10 @@
  * Original: https://github.com/benjitaylor/agentation
  * License: PolyForm Shield License 1.0.0
  */
+export interface GroupElement {
+    readonly name: string;
+    readonly path: string;
+}
 export interface Annotation {
     id: string;
     x: number;
@@ -28,7 +32,22 @@ export interface Annotation {
     accessibility?: string;
     isMultiSelect?: boolean;
     isFixed?: boolean;
+    elements?: readonly GroupElement[];
+    groupBoundingBox?: {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    };
+    totalElementCount?: number;
 }
+export interface SelectionTheme {
+    primary: string;
+    primaryHover: string;
+    markerShape: "circle" | "diamond";
+    borderStyle: "solid" | "dashed";
+}
+export declare const selectionThemes: Record<"single" | "group", SelectionTheme>;
 export interface AgentationProps {
 }
 export interface AgentationSettings {
@@ -58,4 +77,13 @@ export interface PendingAnnotation {
     fullPath?: string;
     accessibility?: string;
     isFixed?: boolean;
+    isMultiSelect?: boolean;
+    elements?: readonly GroupElement[];
+    groupBoundingBox?: {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    };
+    totalElementCount?: number;
 }

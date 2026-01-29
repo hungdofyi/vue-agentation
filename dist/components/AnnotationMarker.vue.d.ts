@@ -6,7 +6,7 @@ interface Props {
     index: number;
     /** Dark mode */
     dark?: boolean;
-    /** Accent color (hex) */
+    /** Accent color (hex) - used for single selection, ignored for group */
     accentColor?: string;
     /** Whether the marker is being hovered */
     isHovered?: boolean;

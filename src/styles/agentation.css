@@ -10,9 +10,14 @@
    CSS Variables
    ============================================ */
 :root {
-  /* Colors */
+  /* Colors - Single selection (blue) */
   --agentation-accent-color: #3b82f6;
   --agentation-accent-hover: #2563eb;
+
+  /* Colors - Group selection (orange) */
+  --agentation-group-color: #f97316;
+  --agentation-group-hover: #ea580c;
+  --agentation-group-bg: rgba(249, 115, 22, 0.1);
 
   /* Light theme */
   --agentation-bg-light: #ffffff;
@@ -187,4 +192,48 @@
   white-space: nowrap;
   box-shadow: var(--agentation-shadow-lg);
   pointer-events: none;
+}
+
+/* ============================================
+   Marquee Selection (while dragging)
+   ============================================ */
+.agentation-marquee {
+  position: fixed;
+  z-index: var(--agentation-z-highlight);
+  pointer-events: none;
+  border: 2px solid var(--agentation-group-color);
+  border-radius: 0.25rem;
+  background-color: var(--agentation-group-bg);
+}
+
+/* ============================================
+   Group Highlight (selected group before popup)
+   ============================================ */
+.agentation-group-highlight {
+  position: fixed;
+  z-index: var(--agentation-z-highlight);
+  pointer-events: none;
+  border: 2px dashed var(--agentation-group-color);
+  border-radius: 0.25rem;
+  background-color: var(--agentation-group-bg);
+}
+
+/* ============================================
+   Element Highlight on Marker Hover
+   ============================================ */
+.agentation-element-highlight {
+  position: fixed;
+  z-index: var(--agentation-z-highlight);
+  pointer-events: none;
+  border-radius: 0.25rem;
+}
+
+.agentation-element-highlight--single {
+  border: 2px solid var(--agentation-accent-color);
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.agentation-element-highlight--group {
+  border: 2px dashed var(--agentation-group-color);
+  background-color: var(--agentation-group-bg);
 }

@@ -118,19 +118,34 @@
    ============================================ */
 .agentation-marker--entering {
   opacity: 0;
-  transform: translateX(-50%) scale(0);
+  transform: translate(-50%, -50%) scale(0);
 }
 
 .agentation-marker--entered {
   opacity: 1;
-  transform: translateX(-50%) scale(1);
+  transform: translate(-50%, -50%) scale(1);
   transition: opacity 0.2s ease-out, transform 0.2s ease-out;
 }
 
 .agentation-marker--exiting {
   opacity: 0;
-  transform: translateX(-50%) scale(0);
+  transform: translate(-50%, -50%) scale(0);
   transition: opacity 0.2s ease-in, transform 0.2s ease-in;
+}
+
+/* Diamond marker animations (needs to preserve rotate) */
+.agentation-marker--diamond.agentation-marker--entering .agentation-marker__dot {
+  transform: rotate(45deg) scale(0);
+}
+
+.agentation-marker--diamond.agentation-marker--entered .agentation-marker__dot {
+  transform: rotate(45deg) scale(1);
+  transition: transform 0.2s ease-out;
+}
+
+.agentation-marker--diamond.agentation-marker--exiting .agentation-marker__dot {
+  transform: rotate(45deg) scale(0);
+  transition: transform 0.2s ease-in;
 }
 
 .agentation-popup--entering {

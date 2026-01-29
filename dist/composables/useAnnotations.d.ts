@@ -27,6 +27,17 @@ export declare function useAnnotations(): {
         readonly accessibility?: string | undefined;
         readonly isMultiSelect?: boolean | undefined;
         readonly isFixed?: boolean | undefined;
+        readonly elements?: readonly {
+            readonly name: string;
+            readonly path: string;
+        }[] | undefined;
+        readonly groupBoundingBox?: {
+            readonly x: number;
+            readonly y: number;
+            readonly width: number;
+            readonly height: number;
+        } | undefined;
+        readonly totalElementCount?: number | undefined;
     }[], readonly {
         readonly id: string;
         readonly x: number;
@@ -50,6 +61,17 @@ export declare function useAnnotations(): {
         readonly accessibility?: string | undefined;
         readonly isMultiSelect?: boolean | undefined;
         readonly isFixed?: boolean | undefined;
+        readonly elements?: readonly {
+            readonly name: string;
+            readonly path: string;
+        }[] | undefined;
+        readonly groupBoundingBox?: {
+            readonly x: number;
+            readonly y: number;
+            readonly width: number;
+            readonly height: number;
+        } | undefined;
+        readonly totalElementCount?: number | undefined;
     }[]>>;
     pendingAnnotation: Readonly<import('vue').Ref<{
         readonly x: number;
@@ -70,6 +92,18 @@ export declare function useAnnotations(): {
         readonly fullPath?: string | undefined;
         readonly accessibility?: string | undefined;
         readonly isFixed?: boolean | undefined;
+        readonly isMultiSelect?: boolean | undefined;
+        readonly elements?: readonly {
+            readonly name: string;
+            readonly path: string;
+        }[] | undefined;
+        readonly groupBoundingBox?: {
+            readonly x: number;
+            readonly y: number;
+            readonly width: number;
+            readonly height: number;
+        } | undefined;
+        readonly totalElementCount?: number | undefined;
     } | null, {
         readonly x: number;
         readonly y: number;
@@ -89,6 +123,18 @@ export declare function useAnnotations(): {
         readonly fullPath?: string | undefined;
         readonly accessibility?: string | undefined;
         readonly isFixed?: boolean | undefined;
+        readonly isMultiSelect?: boolean | undefined;
+        readonly elements?: readonly {
+            readonly name: string;
+            readonly path: string;
+        }[] | undefined;
+        readonly groupBoundingBox?: {
+            readonly x: number;
+            readonly y: number;
+            readonly width: number;
+            readonly height: number;
+        } | undefined;
+        readonly totalElementCount?: number | undefined;
     } | null>>;
     editingAnnotationId: Readonly<import('vue').Ref<string | null, string | null>>;
     count: import('vue').ComputedRef<number>;

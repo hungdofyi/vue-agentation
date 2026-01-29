@@ -32,6 +32,27 @@
   transform: scale(1.1);
 }
 
+/* Diamond marker for group selection */
+.agentation-marker--diamond .agentation-marker__dot {
+  border-radius: 4px;
+  transform: rotate(45deg);
+  background-color: var(--agentation-group-color);
+}
+
+.agentation-marker--diamond .agentation-marker__dot-content {
+  transform: rotate(-45deg);
+}
+
+.agentation-marker--diamond:hover .agentation-marker__dot {
+  transform: rotate(45deg) scale(1.1);
+}
+
+.agentation-marker--diamond .agentation-marker__ping {
+  border-radius: 4px;
+  transform: rotate(45deg);
+  background-color: var(--agentation-group-color);
+}
+
 .agentation-marker__ping {
   position: absolute;
   top: 0;

@@ -17,6 +17,8 @@ interface Props {
     dark?: boolean;
     /** Computed styles to show (collapsible) */
     computedStyles?: string;
+    /** Whether this is a group/multi-select annotation */
+    isMultiSelect?: boolean;
 }
 declare function shake(): void;
 declare const _default: import('vue').DefineComponent<Props, {

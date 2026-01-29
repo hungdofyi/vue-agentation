@@ -7,11 +7,11 @@
 -->
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from "vue";
-import type { AgentationProps, Annotation, PendingAnnotation } from "../types";
+import type { AgentationProps, Annotation, PendingAnnotation, GroupElement } from "../types";
 import AnnotationPopup from "./AnnotationPopup.vue";
 import AnnotationMarker from "./AnnotationMarker.vue";
 import { useAnnotations } from "../composables/useAnnotations";
-import { useElementSelection } from "../composables/useElementSelection";
+import { useElementSelection, type MarqueeBox } from "../composables/useElementSelection";
 import { useAnimationPause } from "../composables/useAnimationPause";
 import { useTheme } from "../composables/useTheme";
 import { generateMarkdown } from "../utils/markdown-output";
@@ -53,6 +53,16 @@ const showPopup = ref(false);
 const hoveredMarkerId = ref<string | null>(null);
 const copySuccess = ref(false);
 const accentColor = "#3b82f6"; // Blue-500
+
+// Marquee selection state
+const freeformMarqueeBox = ref<MarqueeBox | null>(null);  // The box user is drawing
+const elementPreviewBox = ref<MarqueeBox | null>(null);   // Bounding box of selected elements
+const currentMarqueeElements = ref<GroupElement[]>([]);
+
+// Group highlight state (shown after marquee selection, before popup submit)
+// Bounding boxes are stored in document coordinates
+const groupHighlightBox = ref<MarqueeBox | null>(null);
+const currentScrollY = ref<number>(0);  // Reactive scroll position for highlight adjustment
 
 // Computed popup position (to avoid using window in template)
 const popupX = computed(() => {
@@ -97,6 +107,7 @@ const currentAnnotationData = computed(() => {
       computedStyles: pendingAnnotation.value.computedStyles,
       initialValue: "",
       submitLabel: "Add",
+      isMultiSelect: pendingAnnotation.value.isMultiSelect || false,
     };
   } else if (editingAnnotationId.value) {
     const annotation = getAnnotationById(editingAnnotationId.value);
@@ -107,10 +118,55 @@ const currentAnnotationData = computed(() => {
         computedStyles: annotation.computedStyles,
         initialValue: annotation.comment,
         submitLabel: "Update",
+        isMultiSelect: annotation.isMultiSelect || false,
       };
     }
   }
   return null;
+});
+
+// Computed style for group highlight - converts from document to viewport coordinates
+const groupHighlightStyle = computed(() => {
+  if (!groupHighlightBox.value) return null;
+  // groupBoundingBox is stored in document coordinates, subtract current scroll to get viewport position
+  return {
+    left: `${groupHighlightBox.value.x}px`,
+    top: `${groupHighlightBox.value.y - currentScrollY.value}px`,
+    width: `${groupHighlightBox.value.width}px`,
+    height: `${groupHighlightBox.value.height}px`,
+  };
+});
+
+// Scroll event handler for reactive scroll tracking
+function handleScroll() {
+  currentScrollY.value = window.scrollY;
+}
+
+// Element highlight when hovering a marker
+const hoveredAnnotation = computed(() => {
+  if (!hoveredMarkerId.value) return null;
+  return getAnnotationById(hoveredMarkerId.value);
+});
+
+const markerHoverHighlightStyle = computed(() => {
+  if (!hoveredAnnotation.value) return null;
+  const annotation = hoveredAnnotation.value;
+
+  // For group annotations, use groupBoundingBox
+  const box = annotation.isMultiSelect && annotation.groupBoundingBox
+    ? annotation.groupBoundingBox
+    : annotation.boundingBox;
+
+  if (!box) return null;
+
+  // Bounding box is stored in document coordinates, convert to viewport by subtracting scroll
+  // For fixed elements, position is already viewport-relative (no scroll adjustment needed)
+  return {
+    left: `${box.x}px`,
+    top: `${box.y - (annotation.isFixed ? 0 : currentScrollY.value)}px`,
+    width: `${box.width}px`,
+    height: `${box.height}px`,
+  };
 });
 
 // Tooltip position: follows cursor with offset, stays within viewport
@@ -146,6 +202,7 @@ const tooltipStyle = computed(() => {
 // Element selection
 const {
   isActive: isSelecting,
+  isMarqueeMode,
   highlightBox,
   elementInfo,
   cursorPosition,
@@ -154,10 +211,21 @@ const {
   onSelect: (pending: PendingAnnotation) => {
     setPending(pending);
     setEditing(null);
+    // Set group highlight for multi-select (shown until popup is dismissed)
+    if (pending.isMultiSelect && pending.groupBoundingBox) {
+      groupHighlightBox.value = pending.groupBoundingBox;
+    } else {
+      groupHighlightBox.value = null;
+    }
     showPopup.value = true;
   },
   onHoverChange: () => {
     // Could update tooltip here
+  },
+  onMarqueeChange: (freeformBox: MarqueeBox | null, elementBox: MarqueeBox | null, elements: GroupElement[]) => {
+    freeformMarqueeBox.value = freeformBox;
+    elementPreviewBox.value = elementBox;
+    currentMarqueeElements.value = elements;
   },
 });
 
@@ -189,6 +257,10 @@ onMounted(() => {
 
     // Use requestAnimationFrame for instant route change detection (~16ms)
     rafId = requestAnimationFrame(checkRouteLoop);
+
+    // Track scroll for group highlight positioning
+    currentScrollY.value = window.scrollY;
+    window.addEventListener("scroll", handleScroll, { passive: true });
   }
 });
 
@@ -198,6 +270,9 @@ onUnmounted(() => {
     cancelAnimationFrame(rafId);
     rafId = null;
   }
+  if (typeof window !== "undefined") {
+    window.removeEventListener("scroll", handleScroll);
+  }
 });
 
 // Handlers
@@ -205,11 +280,13 @@ function handlePopupSubmit(comment: string) {
   if (pendingAnnotation.value) {
     const annotation = addAnnotation(pendingAnnotation.value, comment);
     showPopup.value = false;
+    groupHighlightBox.value = null;
     emit("annotation-add", annotation);
   } else if (editingAnnotationId.value) {
     const updated = updateAnnotation(editingAnnotationId.value, comment);
     showPopup.value = false;
     setEditing(null);
+    groupHighlightBox.value = null;
     if (updated) {
       emit("annotation-update", updated);
     }
@@ -220,6 +297,7 @@ function handlePopupCancel() {
   showPopup.value = false;
   setPending(null);
   setEditing(null);
+  groupHighlightBox.value = null;
 }
 
 function handleMarkerDelete(annotation: Annotation) {
@@ -430,9 +508,9 @@ function handleMarkerClick(annotation: Annotation) {
       </button>
     </div>
 
-    <!-- Element Highlight Overlay -->
+    <!-- Element Highlight Overlay (single selection hover) -->
     <div
-      v-if="isSelecting && highlightBox"
+      v-if="isSelecting && highlightBox && !isMarqueeMode"
       class="agentation-highlight"
       :style="{
         left: `${highlightBox.left}px`,
@@ -445,13 +523,56 @@ function handleMarkerClick(annotation: Annotation) {
 
     <!-- Element name tooltip (follows cursor) -->
     <div
-      v-if="isSelecting && elementInfo && cursorPosition"
+      v-if="isSelecting && elementInfo && cursorPosition && !isMarqueeMode"
       class="agentation-highlight__tooltip"
       :style="tooltipStyle"
       data-agentation-ignore
     >
       {{ elementInfo.name }}
     </div>
+
+    <!-- Freeform Marquee Overlay (while dragging - shows what user is drawing) -->
+    <div
+      v-if="isSelecting && isMarqueeMode && freeformMarqueeBox"
+      class="agentation-marquee"
+      :style="{
+        left: `${freeformMarqueeBox.x}px`,
+        top: `${freeformMarqueeBox.y}px`,
+        width: `${freeformMarqueeBox.width}px`,
+        height: `${freeformMarqueeBox.height}px`,
+      }"
+      data-agentation-ignore
+    />
+
+    <!-- Element Preview Box (while dragging - shows elements that will be selected) -->
+    <div
+      v-if="isSelecting && isMarqueeMode && elementPreviewBox"
+      class="agentation-marquee"
+      :style="{
+        left: `${elementPreviewBox.x}px`,
+        top: `${elementPreviewBox.y}px`,
+        width: `${elementPreviewBox.width}px`,
+        height: `${elementPreviewBox.height}px`,
+      }"
+      data-agentation-ignore
+    />
+
+    <!-- Group Highlight (after selection, before popup submit - dashed orange) -->
+    <div
+      v-if="groupHighlightBox && showPopup && groupHighlightStyle"
+      class="agentation-group-highlight"
+      :style="groupHighlightStyle"
+      data-agentation-ignore
+    />
+
+    <!-- Element Highlight on Marker Hover -->
+    <div
+      v-if="hoveredMarkerId && markerHoverHighlightStyle"
+      class="agentation-element-highlight"
+      :class="hoveredAnnotation?.isMultiSelect ? 'agentation-element-highlight--group' : 'agentation-element-highlight--single'"
+      :style="markerHoverHighlightStyle"
+      data-agentation-ignore
+    />
 
     <!-- Annotation Markers Container (for scrolling elements) -->
     <div
@@ -503,6 +624,7 @@ function handleMarkerClick(annotation: Annotation) {
       :submit-label="currentAnnotationData.submitLabel"
       :dark="isDark"
       :accent-color="accentColor"
+      :is-multi-select="currentAnnotationData.isMultiSelect"
       @submit="handlePopupSubmit"
       @cancel="handlePopupCancel"
     />

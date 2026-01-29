@@ -30,6 +30,34 @@ export function generateMarkdown(
   ];
 
   annotations.forEach((annotation, index) => {
+    // Handle group annotations differently
+    if (annotation.isMultiSelect && annotation.elements && annotation.elements.length > 0) {
+      // Group annotation format (matches original Agentation)
+      // Use totalElementCount if available (counts all nested elements), otherwise use elements.length
+      const totalCount = annotation.totalElementCount ?? annotation.elements.length;
+      const maxDisplay = 4;
+      const displayElements = annotation.elements.slice(0, maxDisplay);
+      const remaining = annotation.elements.length - maxDisplay;
+
+      const elementList = displayElements.map((e) => e.name).join(", ");
+      const suffix = remaining > 0 ? ` +${remaining} more` : "";
+
+      // Show total nested element count in the header
+      lines.push(`## ${index + 1}. ${totalCount} elements: ${elementList}${suffix}`);
+      lines.push("");
+
+      lines.push(`**Location:** multi-select`);
+      lines.push("");
+
+      lines.push(`**Feedback:** ${annotation.comment}`);
+      lines.push("");
+
+      lines.push("---");
+      lines.push("");
+      return;
+    }
+
+    // Single element annotation (original format)
     lines.push(`## ${index + 1}. ${annotation.element}`);
     lines.push("");
 

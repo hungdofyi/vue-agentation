@@ -8,6 +8,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import type { Annotation } from "../types";
+import { selectionThemes } from "../types";
 
 interface Props {
   /** The annotation data */
@@ -16,7 +17,7 @@ interface Props {
   index: number;
   /** Dark mode */
   dark?: boolean;
-  /** Accent color (hex) */
+  /** Accent color (hex) - used for single selection, ignored for group */
   accentColor?: string;
   /** Whether the marker is being hovered */
   isHovered?: boolean;
@@ -29,6 +30,14 @@ const {
   accentColor = "#3b82f6",
   isHovered = false,
 } = defineProps<Props>();
+
+// Determine if this is a group annotation
+const isGroup = computed(() => annotation.isMultiSelect === true);
+
+// Get the appropriate color based on selection type
+const markerColor = computed(() => {
+  return isGroup.value ? selectionThemes.group.primary : accentColor;
+});
 
 const emit = defineEmits<{
   click: [annotation: Annotation];
@@ -108,6 +117,7 @@ onMounted(() => {
     class="agentation-marker"
     :class="[
       annotation.isFixed ? 'agentation-marker--fixed' : 'agentation-marker--absolute',
+      isGroup && 'agentation-marker--diamond',
       animState === 'initial' && 'agentation-marker--entering',
       animState === 'enter' && 'agentation-marker--entering',
       animState === 'entered' && 'agentation-marker--entered',
@@ -119,18 +129,21 @@ onMounted(() => {
     @mouseleave="handleMouseLeave"
     @click="handleClick"
   >
-    <!-- Marker dot with number -->
+    <!-- Marker dot with number (circle for single, diamond for group) -->
     <div
       class="agentation-marker__dot"
       :class="[isHovered && 'agentation-marker__dot--hovered']"
-      :style="{ backgroundColor: accentColor }"
+      :style="{ backgroundColor: markerColor }"
     >
-      {{ index + 1 }}
+      <!-- Content wrapper for diamond (rotated back to upright) -->
+      <span :class="isGroup && 'agentation-marker__dot-content'">
+        {{ index + 1 }}
+      </span>
 
       <!-- Pulse animation ring -->
       <div
         class="agentation-marker__ping agentation-animate-ping"
-        :style="{ backgroundColor: accentColor }"
+        :style="{ backgroundColor: markerColor }"
       />
     </div>
 
@@ -233,5 +246,9 @@ onMounted(() => {
 <style scoped>
 .agentation-marker__dot--hovered {
   transform: scale(1.1);
+}
+
+.agentation-marker--diamond .agentation-marker__dot--hovered {
+  transform: rotate(45deg) scale(1.1);
 }
 </style>

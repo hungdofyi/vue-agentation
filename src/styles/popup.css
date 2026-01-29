@@ -51,6 +51,12 @@
   background-color: var(--agentation-accent-color);
 }
 
+.agentation-popup__header-dot--diamond {
+  border-radius: 2px;
+  transform: rotate(45deg);
+  background-color: var(--agentation-group-color);
+}
+
 .agentation-popup__header-title {
   font-size: 0.875rem;
   font-weight: 500;
