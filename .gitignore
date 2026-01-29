@@ -26,5 +26,3 @@ coverage/
 *.tmp
 *.temp
 
-# Playground (local testing only)
-playground/
